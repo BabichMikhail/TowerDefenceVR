@@ -31,6 +31,15 @@ abstract public class BaseRouter
     {
         return inPlace;
     }
+
+    abstract protected BaseRouter CreateInstance();
+    public BaseRouter CopyInstance()
+    {
+        var newRouter = CreateInstance();
+        newRouter.points = points;
+        newRouter.targetPointIndex = targetPointIndex;
+        return newRouter;
+    }
 }
 
 class SampleRouter : BaseRouter
@@ -51,6 +60,11 @@ class SampleRouter : BaseRouter
     public override Vector2 GetInitialPoint()
     {
         return points[0];
+    }
+
+    protected override BaseRouter CreateInstance()
+    {
+        return new SampleRouter();
     }
 }
 
@@ -78,10 +92,7 @@ public class Main : MonoBehaviour {
     {
         var unit = Instantiate(units[Random.Range(0, units.Length)], gameObject.transform);
         var router = routers[Random.Range(0, routers.Count)];
-        var newRouter = new SampleRouter();
-        newRouter.points = router.points;
-        newRouter.targetPointIndex = 1;
-        unit.GetComponent<Move>().router = newRouter;
+        unit.GetComponent<Move>().router = router.CopyInstance();
         var initialPoint = router.GetInitialPoint();
         unit.transform.position = new Vector3(initialPoint.x, 0, initialPoint.y);
     }
