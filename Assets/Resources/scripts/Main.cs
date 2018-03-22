@@ -18,7 +18,7 @@ abstract public class BaseRouter
 
     protected Vector2 NormalizeState(Vector2 position, Vector2 vector)
     {
-        Debug.Log((points[targetPointIndex] - position).sqrMagnitude);
+        //Debug.Log((points[targetPointIndex] - position).sqrMagnitude);
         if ((points[targetPointIndex] - position).sqrMagnitude < MIN_DISTANCE) {
             ++targetPointIndex;
             inPlace = targetPointIndex == points.Count;
@@ -71,6 +71,8 @@ class SampleRouter : BaseRouter
 public class Main : MonoBehaviour {
     private List<BaseRouter> routers = new List<BaseRouter>();
     public GameObject[] units;
+    public GameObject archedTower;
+    public GameObject siegeTower;
 
     private void Start()
     {
@@ -100,5 +102,17 @@ public class Main : MonoBehaviour {
     public void OnMouseUp()
     {
         SendUnit();
+    }
+
+    public void createArchedTower()
+    {
+        Debug.Log("Arched tower");
+        CurrentTowersState.GetInstance().CreateTower(archedTower);
+    }
+
+    public void createSiegeTower()
+    {
+        Debug.Log("Siege tower");
+        CurrentTowersState.GetInstance().CreateTower(siegeTower);
     }
 }
