@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class CurrentTowerDefenceState
@@ -7,6 +6,7 @@ public class CurrentTowerDefenceState
     private static CurrentTowerDefenceState instance;
     private static Canvas createTowerCanvas;
     private static Canvas changeTowerCanvas;
+    public enum UpgradeTypes { UPDRADE_SPEED, UPGRADE_DAMAGE }
 
     private CurrentTowerDefenceState() { }
 
@@ -75,10 +75,22 @@ public class CurrentTowerDefenceState
         Debug.Assert(!createdTowers.ContainsKey(tower.name));
         var newTower = Object.Instantiate(towerPrefab, tower.transform);
         newTower.transform.localPosition = new Vector3(0, 0, 0);
-        createdTowers[tower.name] = (Tower)newTower.GetComponent<Tower>();
+        createdTowers[tower.name] = newTower.GetComponent<Tower>();
         Debug.Log(tower.name);
         DisableCanvases();
         SetCurrentTower(null);
         return newTower;
+    }
+
+    public void UpdgradeCurrentTower(UpgradeTypes upgradeType, int value)
+    {
+        var towerObject = GetCurrentTower();
+        var tower = GetCurrentTower().GetComponent<Tower>();
+        if (upgradeType == UpgradeTypes.UPGRADE_DAMAGE) {
+            tower.damage += value;
+        } else if (upgradeType == UpgradeTypes.UPDRADE_SPEED) {
+            tower.speed += value;
+        }
+
     }
 }

@@ -8,6 +8,7 @@ public class Main : MonoBehaviour {
     public GameObject siegeTower;
     public Canvas createTowerCanvas;
     public Canvas changeTowerCanvas;
+    public GameObject unitCollection;
 
     private void Start()
     {
@@ -30,7 +31,7 @@ public class Main : MonoBehaviour {
 
     public void SendUnit()
     {
-        var unit = Instantiate(units[Random.Range(0, units.Length)], gameObject.transform);
+        var unit = Instantiate(units[Random.Range(0, units.Length)], unitCollection.transform);
         var router = routers[Random.Range(0, routers.Count)];
         unit.GetComponent<Move>().router = router.CopyInstance();
         var initialPoint = router.GetInitialPoint();
@@ -54,13 +55,15 @@ public class Main : MonoBehaviour {
         CurrentTowerDefenceState.GetInstance().CreateTower(siegeTower);
     }
 
-    public void updateTowerSpeed()
+    public void increaseTowerSpeed()
     {
         Debug.Log("Tower speed");
+        CurrentTowerDefenceState.GetInstance().UpdgradeCurrentTower(CurrentTowerDefenceState.UpgradeTypes.UPDRADE_SPEED, 1);
     }
 
-    public void updateTowerDamage()
+    public void increaseTowerDamage()
     {
         Debug.Log("Tower damage");
+        CurrentTowerDefenceState.GetInstance().UpdgradeCurrentTower(CurrentTowerDefenceState.UpgradeTypes.UPGRADE_DAMAGE, 1);
     }
 }

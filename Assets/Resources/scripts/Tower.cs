@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 
 public class Tower : MonoBehaviour {
+    public int damage = 1000;
+    public int speed = 1000;
+
     private void OnMouseUp()
     {
         var state = CurrentTowerDefenceState.GetInstance();
