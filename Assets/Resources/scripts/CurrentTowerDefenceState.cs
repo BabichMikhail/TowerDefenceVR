@@ -23,14 +23,6 @@ public class CurrentTowerDefenceState
         changeTowerCanvas = changeTower;
     }
 
-    public Canvas GetCanvas(CurrentTowerDefenceState state)
-    {
-        var obj = createTowerCanvas;
-        if (state.TowerExists())
-            obj = changeTowerCanvas;
-        return obj.GetComponent<Canvas>();
-    }
-
     public void DisableCanvases()
     {
         createTowerCanvas.GetComponent<Canvas>().enabled = false;
@@ -69,6 +61,11 @@ public class CurrentTowerDefenceState
     public GameObject GetCurrentTower()
     {
         return currentTower;
+    }
+
+    public Canvas GetCurrentCanvas()
+    {
+        return TowerExists() ? changeTowerCanvas : createTowerCanvas;
     }
 
     public GameObject CreateTower(GameObject towerPrefab)

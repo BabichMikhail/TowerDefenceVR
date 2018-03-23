@@ -401,8 +401,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc2e7f0388a72441a9e5acf8501b780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createTowerCanvas: {fileID: 1996926689}
-  changeTowerCanvas: {fileID: 1602845742}
 --- !u!136 &252148254
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1041,8 +1039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc2e7f0388a72441a9e5acf8501b780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createTowerCanvas: {fileID: 1996926689}
-  changeTowerCanvas: {fileID: 1602845742}
 --- !u!1 &537781300
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,6 +2067,8 @@ MonoBehaviour:
   archedTower: {fileID: 1431277398966370, guid: 515cf89805cc6644281238deba1cd4ee,
     type: 2}
   siegeTower: {fileID: 1614048655041290, guid: b9ce2545faebd7c4b99587511d8e0921, type: 2}
+  createTowerCanvas: {fileID: 1996926689}
+  changeTowerCanvas: {fileID: 1602845742}
 --- !u!1 &1023697130
 GameObject:
   m_ObjectHideFlags: 0
@@ -2906,7 +2904,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1503130678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: -1.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1664228974}
@@ -3348,7 +3346,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1664228973}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.64}
+  m_LocalPosition: {x: 0, y: 0, z: 1.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1503130679}
@@ -3950,8 +3948,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc2e7f0388a72441a9e5acf8501b780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  createTowerCanvas: {fileID: 1996926689}
-  changeTowerCanvas: {fileID: 1602845742}
 --- !u!1 &1986476970
 GameObject:
   m_ObjectHideFlags: 0
