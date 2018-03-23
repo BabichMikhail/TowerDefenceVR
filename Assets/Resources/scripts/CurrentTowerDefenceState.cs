@@ -91,6 +91,7 @@ public class CurrentTowerDefenceState
         } else if (upgradeType == UpgradeTypes.UPDRADE_SPEED) {
             tower.speed += value;
         }
-
+        DisableCanvases();
+        SetCurrentTower(null);
     }
 }
