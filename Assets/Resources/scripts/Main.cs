@@ -107,12 +107,22 @@ public class Main : MonoBehaviour {
     public void createArchedTower()
     {
         Debug.Log("Arched tower");
-        CurrentTowersState.GetInstance().CreateTower(archedTower);
+        CurrentTowerDefenceState.GetInstance().CreateTower(archedTower);
     }
 
     public void createSiegeTower()
     {
         Debug.Log("Siege tower");
-        CurrentTowersState.GetInstance().CreateTower(siegeTower);
+        CurrentTowerDefenceState.GetInstance().CreateTower(siegeTower);
+    }
+
+    public void updateTowerSpeed()
+    {
+        Debug.Log("Tower speed");
+    }
+
+    public void updateTowerDamage()
+    {
+        Debug.Log("Tower damage");
     }
 }
