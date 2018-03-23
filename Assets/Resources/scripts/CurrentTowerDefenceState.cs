@@ -8,6 +8,8 @@ public class CurrentTowerDefenceState
     private static Canvas changeTowerCanvas;
     public enum UpgradeTypes { UPDRADE_SPEED, UPGRADE_DAMAGE }
 
+    public int balance = 100;
+
     private CurrentTowerDefenceState() { }
 
     public static CurrentTowerDefenceState GetInstance()
@@ -69,12 +71,13 @@ public class CurrentTowerDefenceState
         SetCurrentTower(null);
     }
 
-    public GameObject CreateTower(GameObject towerPrefab)
+    public GameObject CreateTower(GameObject towerPrefab, GameObject projectile)
     {
         var tower = GetCurrentTower();
         Debug.Assert(tower != null);
         Debug.Assert(!createdTowers.ContainsKey(tower.name));
         var newTower = Object.Instantiate(towerPrefab, tower.transform);
+        newTower.GetComponent<Tower>().SetProjectile(projectile);
         newTower.transform.localPosition = new Vector3(0, 0, 0);
         createdTowers[tower.name] = newTower.GetComponent<Tower>();
         Debug.Log(tower.name);
@@ -84,7 +87,6 @@ public class CurrentTowerDefenceState
 
     public void UpdgradeCurrentTower(UpgradeTypes upgradeType, int value)
     {
-        var towerObject = GetCurrentTower();
         var tower = GetCurrentTower().GetComponent<Tower>();
         if (upgradeType == UpgradeTypes.UPGRADE_DAMAGE) {
             tower.damage += value;
@@ -92,5 +94,10 @@ public class CurrentTowerDefenceState
             tower.speed += value;
         }
         ResetTower();
+    }
+
+    public void ChangeBalance(int delta)
+    {
+        balance += delta;
     }
 }

@@ -1,14 +1,35 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+public class CollectionContainer {
+    public static GameObject unitCollection;
+    public static GameObject projectileCollection;
+    public static GameObject routeCollection;
+    public static GameObject towerCollection;
+}
+
 public class Main : MonoBehaviour {
     private List<BaseRouter> routers = new List<BaseRouter>();
     public GameObject[] units;
     public GameObject archedTower;
+    public GameObject archedProjectile;
     public GameObject siegeTower;
+    public GameObject siegeProjectile;
     public Canvas createTowerCanvas;
     public Canvas changeTowerCanvas;
+
     public GameObject unitCollection;
+    public GameObject projectileCollection;
+    public GameObject routeCollection;
+    public GameObject towerCollection;
+
+    private void Awake()
+    {
+        CollectionContainer.routeCollection = routeCollection;
+        CollectionContainer.towerCollection = towerCollection;
+        CollectionContainer.unitCollection = unitCollection;
+        CollectionContainer.projectileCollection = projectileCollection;
+    }
 
     private void Start()
     {
@@ -46,13 +67,13 @@ public class Main : MonoBehaviour {
     public void createArchedTower()
     {
         Debug.Log("Arched tower");
-        CurrentTowerDefenceState.GetInstance().CreateTower(archedTower);
+        CurrentTowerDefenceState.GetInstance().CreateTower(archedTower, archedProjectile);
     }
 
     public void createSiegeTower()
     {
         Debug.Log("Siege tower");
-        CurrentTowerDefenceState.GetInstance().CreateTower(siegeTower);
+        CurrentTowerDefenceState.GetInstance().CreateTower(siegeTower, siegeProjectile);
     }
 
     public void increaseTowerSpeed()

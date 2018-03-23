@@ -1,26 +1,53 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class Tower : MonoBehaviour {
+public class Tower : MonoBehaviour
+{
     public int damage = 1000;
     public int speed = 1000;
+    public float radius = (float)5;
 
-    private void OnMouseUp()
+    private GameObject unitCollection;
+    private GameObject projectileCollection;
+    private int lastShotTime = -100000;
+    private GameObject projectilePrefab;
+
+    private void Start()
     {
-        var state = CurrentTowerDefenceState.GetInstance();
-        var enabled = state.GetCanvasEnabled();
-        if (enabled && !state.TowerIsCurrent(gameObject))
-            enabled = false;
+        Debug.Assert(lastShotTime + speed <= 0);
+        unitCollection = CollectionContainer.unitCollection;
+        projectileCollection = CollectionContainer.projectileCollection;
+    }
 
-        state.ResetTower();
-        if (!enabled) {
-            state.SetCurrentTower(gameObject);
-            Canvas canvas = null;
-            canvas = state.GetCurrentCanvas();
-            canvas.transform.parent = transform;
-            canvas.transform.localPosition = new Vector3(0, 0, 0);
-            canvas.enabled = true;
+    private void Update()
+    {
+        if (lastShotTime + speed < Time.time * 1000) {
+            Debug.Log("TRY FIRE");
+            List<Transform> availableUnits = new List<Transform>();
+            for (int i = 0; i < unitCollection.transform.childCount; ++i) {
+                var child = unitCollection.transform.GetChild(i);
+                var distance = Mathf.Abs((child.position - gameObject.transform.position).magnitude - radius);
+                Debug.Log("Distance = " + (child.transform.position - gameObject.transform.position).magnitude);
+                if ((child.transform.position - gameObject.transform.position).magnitude <= radius)
+                    availableUnits.Add(child);
+            }
+
+            if (availableUnits.Count > 0)
+                ShootAt(availableUnits[Random.Range(0, availableUnits.Count)]);
         }
-        
-        Debug.Log("Click-Click");
+    }
+
+    private void ShootAt(Transform unit)
+    {
+        gameObject.transform.LookAt(unit); // TODO animation, rotate speed
+        var projectile = Instantiate(projectilePrefab, projectileCollection.transform);
+        projectile.transform.position = gameObject.transform.position; // TODO real projectile execute position
+        projectile.GetComponent<Projectile>().SetUp(projectile.transform.position, unit.transform.position, unit.gameObject, damage);
+    }
+
+    public void SetProjectile(GameObject projectile)
+    {
+        projectilePrefab = projectile;
     }
 }

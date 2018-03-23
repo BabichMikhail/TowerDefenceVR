@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.39198107, g: 0.40182015, b: 0.38272092, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -367,8 +367,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 252148252}
-  - component: {fileID: 252148253}
   - component: {fileID: 252148254}
+  - component: {fileID: 252148253}
   m_Layer: 0
   m_Name: TowerPosition1
   m_TagString: Untagged
@@ -398,11 +398,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 252148251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc2e7f0388a72441a9e5acf8501b780, type: 3}
+  m_Script: {fileID: 11500000, guid: 6aa757be79c8f6f40ba9e7c8503f7dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1000
-  speed: 1000
 --- !u!136 &252148254
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -994,8 +992,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 512168925}
-  - component: {fileID: 512168927}
   - component: {fileID: 512168926}
+  - component: {fileID: 512168927}
   m_Layer: 0
   m_Name: TowerPosition2
   m_TagString: Untagged
@@ -1038,11 +1036,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 512168924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc2e7f0388a72441a9e5acf8501b780, type: 3}
+  m_Script: {fileID: 11500000, guid: 6aa757be79c8f6f40ba9e7c8503f7dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1000
-  speed: 1000
 --- !u!1 &537781300
 GameObject:
   m_ObjectHideFlags: 0
@@ -1633,6 +1629,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 765411187}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &799118098
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 799118100}
+  m_Layer: 0
+  m_Name: ProjectileCollection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &799118100
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 799118098}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
+  m_Children: []
+  m_Father: {fileID: 1023444934}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &938218568
 GameObject:
   m_ObjectHideFlags: 0
@@ -2053,6 +2077,7 @@ Transform:
   - {fileID: 1996926686}
   - {fileID: 1602845738}
   - {fileID: 1376117501}
+  - {fileID: 799118100}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2069,12 +2094,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   units:
   - {fileID: 1148594694458934, guid: 19862dc730a534442b33ff42b9f292ab, type: 2}
-  archedTower: {fileID: 1431277398966370, guid: 515cf89805cc6644281238deba1cd4ee,
+  archedTower: {fileID: 1390651669899938, guid: 515cf89805cc6644281238deba1cd4ee,
     type: 2}
-  siegeTower: {fileID: 1614048655041290, guid: b9ce2545faebd7c4b99587511d8e0921, type: 2}
+  archedProjectile: {fileID: 1454275863632936, guid: 70dcfc518cef4134daea52dafdb4ade3,
+    type: 2}
+  siegeTower: {fileID: 1566158573639800, guid: b9ce2545faebd7c4b99587511d8e0921, type: 2}
+  siegeProjectile: {fileID: 1382056256112486, guid: d5af9ca0c36e5434f9eb0793b4a79f8a,
+    type: 2}
   createTowerCanvas: {fileID: 1996926689}
   changeTowerCanvas: {fileID: 1602845742}
   unitCollection: {fileID: 1516687952}
+  projectileCollection: {fileID: 799118098}
+  routeCollection: {fileID: 357999925}
+  towerCollection: {fileID: 1376117500}
 --- !u!1 &1023697130
 GameObject:
   m_ObjectHideFlags: 0
@@ -2910,7 +2942,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1503130678}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -1.38}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1664228974}
@@ -3380,7 +3412,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1664228973}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.33}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1503130679}
@@ -3935,8 +3967,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1956073820}
-  - component: {fileID: 1956073822}
   - component: {fileID: 1956073821}
+  - component: {fileID: 1956073822}
   m_Layer: 0
   m_Name: TowerPosition3
   m_TagString: Untagged
@@ -3979,11 +4011,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1956073819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcc2e7f0388a72441a9e5acf8501b780, type: 3}
+  m_Script: {fileID: 11500000, guid: 6aa757be79c8f6f40ba9e7c8503f7dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1000
-  speed: 1000
 --- !u!1 &1986476970
 GameObject:
   m_ObjectHideFlags: 0
