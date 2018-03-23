@@ -23,12 +23,6 @@ public class CurrentTowerDefenceState
         changeTowerCanvas = changeTower;
     }
 
-    public void DisableCanvases()
-    {
-        createTowerCanvas.GetComponent<Canvas>().enabled = false;
-        changeTowerCanvas.GetComponent<Canvas>().enabled = false;
-    }
-
     public bool GetCanvasEnabled()
     {
         return
@@ -68,6 +62,13 @@ public class CurrentTowerDefenceState
         return TowerExists() ? changeTowerCanvas : createTowerCanvas;
     }
 
+    public void ResetTower()
+    {
+        createTowerCanvas.GetComponent<Canvas>().enabled = false;
+        changeTowerCanvas.GetComponent<Canvas>().enabled = false;
+        SetCurrentTower(null);
+    }
+
     public GameObject CreateTower(GameObject towerPrefab)
     {
         var tower = GetCurrentTower();
@@ -77,8 +78,7 @@ public class CurrentTowerDefenceState
         newTower.transform.localPosition = new Vector3(0, 0, 0);
         createdTowers[tower.name] = newTower.GetComponent<Tower>();
         Debug.Log(tower.name);
-        DisableCanvases();
-        SetCurrentTower(null);
+        ResetTower();
         return newTower;
     }
 
@@ -91,7 +91,6 @@ public class CurrentTowerDefenceState
         } else if (upgradeType == UpgradeTypes.UPDRADE_SPEED) {
             tower.speed += value;
         }
-        DisableCanvases();
-        SetCurrentTower(null);
+        ResetTower();
     }
 }

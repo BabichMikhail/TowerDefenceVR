@@ -33,7 +33,7 @@ public class Main : MonoBehaviour {
     {
         var unit = Instantiate(units[Random.Range(0, units.Length)], unitCollection.transform);
         var router = routers[Random.Range(0, routers.Count)];
-        unit.GetComponent<Move>().router = router.CopyInstance();
+        unit.GetComponent<Unit>().router = router.CopyInstance();
         var initialPoint = router.GetInitialPoint();
         unit.transform.position = new Vector3(initialPoint.x, 0, initialPoint.y);
     }

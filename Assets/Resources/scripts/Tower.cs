@@ -8,11 +8,10 @@ public class Tower : MonoBehaviour {
     {
         var state = CurrentTowerDefenceState.GetInstance();
         var enabled = state.GetCanvasEnabled();
-        state.DisableCanvases();
         if (enabled && !state.TowerIsCurrent(gameObject))
             enabled = false;
 
-        state.SetCurrentTower(null);
+        state.ResetTower();
         if (!enabled) {
             state.SetCurrentTower(gameObject);
             Canvas canvas = null;
