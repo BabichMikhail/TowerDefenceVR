@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
-public class Move : MonoBehaviour {
+public class Unit : MonoBehaviour {
     public BaseRouter router;
+    public int health = 5000;
 
     public void Update()
     {
