@@ -13,8 +13,10 @@ public class Projectile : MonoBehaviour {
 
     private void Update()
     {
-        if (destinationObject == null)
+        if (destinationObject == null) {
             Destroy(gameObject);
+            return;
+        }
 
         Debug.Assert(initialPoint != null);
         Debug.Assert(destinationPoint != null);
