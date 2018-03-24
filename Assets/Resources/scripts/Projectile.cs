@@ -25,7 +25,6 @@ public class Projectile : MonoBehaviour {
             Vector3 route = (destinationPoint - initialPoint);
             route.y = 0;
             float flyTime = route.magnitude / speed;
-           // float t2 = (initialPoint.y - destinationPoint.y) / (g * flyTime) + flyTime / 2f;
             float t1 = flyTime / 2f - (initialPoint.y - destinationPoint.y) / (g * flyTime);
 
             float alfa = Mathf.Atan((g*t1*t1/2)/(speed*t1));
@@ -50,7 +49,7 @@ public class Projectile : MonoBehaviour {
         Debug.Assert(initialPoint != null);
         Debug.Assert(destinationPoint != null);
         if (approximationDegree == 1) {
-            movement = (destinationObject.transform.position - transform.position) * Time.deltaTime * speed;
+            movement = (destinationObject.transform.position - transform.position).normalized * Time.deltaTime * speed;
             destinationPoint = destinationObject.transform.position;
         } else if (approximationDegree == 2) {
             float speedY = speedVector.y - g*Time.deltaTime;
