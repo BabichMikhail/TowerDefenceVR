@@ -15,6 +15,9 @@ public class Projectile : MonoBehaviour {
     private int damage;
     private Vector3 speedVector;
 
+    public enum TargetType { TOWER, UNIT }
+    private TargetType targetType;
+
     private int initialTime;
 
     private void Start()
@@ -64,23 +67,30 @@ public class Projectile : MonoBehaviour {
 
         if ((destinationPoint - transform.position).magnitude < 0.5) {
             if (approximationDegree == 1) {
-                destinationObject.GetComponent<Unit>().health -= damage;
+                if (targetType == TargetType.UNIT)
+                    destinationObject.GetComponent<Unit>().health -= damage;
+                else
+                    destinationObject.GetComponent<MainTower>().health -= damage;
             }
-            var unitCollection = CollectionContainer.unitCollection;
-            for (int i = 0; i < unitCollection.transform.childCount; ++i) {
-                var childObject = unitCollection.transform.GetChild(i).gameObject;
-                if ((childObject.transform.position - destinationPoint).sqrMagnitude < damageRadius * damageRadius)
-                    childObject.GetComponent<Unit>().health -= damage;
+
+            if (targetType == TargetType.UNIT) {
+                var unitCollection = CollectionContainer.unitCollection;
+                for (int i = 0; i < unitCollection.transform.childCount; ++i) {
+                    var childObject = unitCollection.transform.GetChild(i).gameObject;
+                    if ((childObject.transform.position - destinationPoint).sqrMagnitude < damageRadius * damageRadius)
+                        childObject.GetComponent<Unit>().health -= damage;
+                }
             }
             Destroy(gameObject);
         }
     }
 
-    public void SetUp(Vector3 newInitialPoint, Vector3 newDestinationPoint, GameObject newDestinationObject, int newDamage)
+    public void SetUp(Vector3 newInitialPoint, Vector3 newDestinationPoint, GameObject newDestinationObject, int newDamage, TargetType newTargetType)
     {
         initialPoint = newInitialPoint;
         destinationPoint = newDestinationPoint;
         destinationObject = newDestinationObject;
         damage = newDamage;
+        targetType = newTargetType;
     }
 }

@@ -23,7 +23,6 @@ public class Tower : MonoBehaviour
     private void Update()
     {
         if (lastShotTime + fireInterval < Time.time * 1000) {
-            Debug.Log("TRY FIRE");
             List<Transform> availableUnits = new List<Transform>();
             for (int i = 0; i < unitCollection.transform.childCount; ++i) {
                 var child = unitCollection.transform.GetChild(i);
@@ -41,8 +40,8 @@ public class Tower : MonoBehaviour
     {
         gameObject.transform.LookAt(unit); // TODO animation, rotate speed
         var projectile = Instantiate(projectilePrefab, projectileCollection.transform);
-        projectile.transform.position = gameObject.transform.position; // TODO real projectile execute position
-        projectile.GetComponent<Projectile>().SetUp(projectile.transform.position, unit.transform.position, unit.gameObject, damage);
+        projectile.transform.position = gameObject.transform.position; // TODO real position
+        projectile.GetComponent<Projectile>().SetUp(projectile.transform.position, unit.transform.position, unit.gameObject, damage, Projectile.TargetType.UNIT);
         lastShotTime = (int)(Time.time * 1000);
     }
 

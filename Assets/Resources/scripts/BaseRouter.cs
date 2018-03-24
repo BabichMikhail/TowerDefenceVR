@@ -6,7 +6,7 @@ abstract public class BaseRouter
     public List<Vector2> points;
     public int targetPointIndex = 1;
     public bool inPlace = false;
-    const double MIN_DISTANCE = 0.5;
+    const float MIN_DISTANCE = 0.5f;
     abstract public Vector2 GetMovement(Transform transform);
     abstract public Vector2 GetInitialPoint();
 
@@ -17,7 +17,7 @@ abstract public class BaseRouter
 
     protected Vector2 NormalizeState(Vector2 position, Vector2 vector)
     {
-        if ((points[targetPointIndex] - position).sqrMagnitude < MIN_DISTANCE) {
+        if ((points[targetPointIndex] - position).magnitude < MIN_DISTANCE) {
             ++targetPointIndex;
             inPlace = targetPointIndex == points.Count;
         }
@@ -25,8 +25,9 @@ abstract public class BaseRouter
         return vector;
     }
 
-    public bool InPlace()
+    public bool InPlace(Vector2 position, float minDistance)
     {
+        inPlace = inPlace || (points[points.Count - 1] - position).magnitude < Mathf.Min(minDistance, MIN_DISTANCE);
         return inPlace;
     }
 

@@ -11,6 +11,7 @@ public class CollectionContainer {
 public class Main : MonoBehaviour {
     private List<BaseRouter> routers = new List<BaseRouter>();
     public GameObject[] units;
+    public GameObject mainTower;
     public GameObject archedTower;
     public GameObject archedProjectile;
     public GameObject siegeTower;
@@ -54,7 +55,7 @@ public class Main : MonoBehaviour {
     {
         var unit = Instantiate(units[Random.Range(0, units.Length)], unitCollection.transform);
         var router = routers[Random.Range(0, routers.Count)];
-        unit.GetComponent<Unit>().router = router.CopyInstance();
+        unit.GetComponent<Unit>().SetUp(router, mainTower);
         var initialPoint = router.GetInitialPoint();
         unit.transform.position = new Vector3(initialPoint.x, 0, initialPoint.y);
     }

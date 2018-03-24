@@ -2093,7 +2093,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   units:
-  - {fileID: 1148594694458934, guid: 19862dc730a534442b33ff42b9f292ab, type: 2}
+  - {fileID: 1610105699836364, guid: 484ca4d6bb0b3e249aeaefaf0fa7c70b, type: 2}
+  mainTower: {fileID: 1664228973}
   archedTower: {fileID: 1390651669899938, guid: 515cf89805cc6644281238deba1cd4ee,
     type: 2}
   archedProjectile: {fileID: 1454275863632936, guid: 70dcfc518cef4134daea52dafdb4ade3,
@@ -3398,8 +3399,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1664228974}
+  - component: {fileID: 1664228975}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: MainTower
   m_TagString: MainTower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3419,6 +3421,18 @@ Transform:
   m_Father: {fileID: 1023444934}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1664228975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1664228973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e574f3a205db811498154a5bc84bba59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10000
 --- !u!1 &1685678720
 GameObject:
   m_ObjectHideFlags: 0
