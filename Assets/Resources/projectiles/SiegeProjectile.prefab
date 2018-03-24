@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   approximationDegree: 2
+  speed: 2
+  damageRadius: 1
 --- !u!135 &135747241745496758
 SphereCollider:
   m_ObjectHideFlags: 1

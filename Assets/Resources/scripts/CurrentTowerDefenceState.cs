@@ -91,7 +91,7 @@ public class CurrentTowerDefenceState
         if (upgradeType == UpgradeTypes.UPGRADE_DAMAGE) {
             tower.damage += value;
         } else if (upgradeType == UpgradeTypes.UPDRADE_SPEED) {
-            tower.speed += value;
+            tower.fireInterval -= value;
         }
         ResetTower();
     }

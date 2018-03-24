@@ -3,7 +3,8 @@
 public class Unit : MonoBehaviour {
     public BaseRouter router;
     public int health = 5000;
-    private float speed = (float)0.20;
+    public float attack_radius = 1.0f;
+    private float speed = 0.20f;
 
     public void Update()
     {
