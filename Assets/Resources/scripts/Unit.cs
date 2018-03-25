@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Unit : MonoBehaviour {
     public int health = 5000;
@@ -20,7 +21,7 @@ public class Unit : MonoBehaviour {
             CurrentTowerDefenceState.GetInstance().ChangeBalance(100);
         }
 
-        if (router.InPlace(new Vector2(transform.position.x, transform.position.z), attackRadius)){
+        if (router.InPlace(transform.position, attackRadius)){
             if (lastShotTime + fireInterval < Time.time * 1000) {
                 var unitCollection = CollectionContainer.unitCollection;
                 List<Transform> availableUnits = new List<Transform>();
@@ -28,8 +29,7 @@ public class Unit : MonoBehaviour {
                     ShootAtTower();
             }
         } else {
-            var movement = Time.deltaTime * router.GetMovement(transform);
-            transform.position = transform.position + (new Vector3(movement.x, 0, movement.y)) * speed;
+            router.ApplyMovement(transform, Time.deltaTime, speed);
         }
     }
 

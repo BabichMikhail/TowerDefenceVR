@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 abstract public class BaseRouter
 {
-    public List<Vector2> points;
+    public List<Vector3> points;
     public int targetPointIndex = 1;
     public bool inPlace = false;
-    const float MIN_DISTANCE = 0.5f;
-    abstract public Vector2 GetMovement(Transform transform);
-    abstract public Vector2 GetInitialPoint();
+    protected const float MIN_DISTANCE = 0.5f;
+    abstract public void ApplyMovement(Transform transform, float deltaTime, float speed);
+    abstract public void SetPosition(Transform transform, Vector3 position);
 
-    public static Vector2 GetObjectPosition(Transform transform)
+    public Vector3 GetInitialPoint()
     {
-        return new Vector2(transform.position.x, transform.position.z);
+        return points[0];
     }
 
-    protected Vector2 NormalizeState(Vector2 position, Vector2 vector)
+    protected Vector3 NormalizeState(Vector3 position, Vector3 vector)
     {
-        if ((points[targetPointIndex] - position).magnitude < MIN_DISTANCE) {
+        if ((points[targetPointIndex] - position).sqrMagnitude < MIN_DISTANCE * MIN_DISTANCE) {
             ++targetPointIndex;
             inPlace = targetPointIndex == points.Count;
         }
@@ -25,7 +26,7 @@ abstract public class BaseRouter
         return vector;
     }
 
-    public bool InPlace(Vector2 position, float minDistance)
+    public bool InPlace(Vector3 position, float minDistance)
     {
         inPlace = inPlace || (points[points.Count - 1] - position).magnitude < Mathf.Min(minDistance, MIN_DISTANCE);
         return inPlace;
@@ -43,10 +44,15 @@ abstract public class BaseRouter
 
 class SampleRouter : BaseRouter
 {
-    public override Vector2 GetMovement(Transform transform)
+    public override void SetPosition(Transform transform, Vector3 position)
+    {
+        transform.position = position;
+    }
+
+    private Vector3 GetMovement(Transform transform)
     {
         Debug.Assert(targetPointIndex < points.Count);
-        var position = GetObjectPosition(transform);
+        var position = transform.position;
         if (targetPointIndex == points.Count - 1)
             return NormalizeState(position, points[targetPointIndex] - position);
         float distance1 = 100 * (points[targetPointIndex] - position).sqrMagnitude;
@@ -56,13 +62,41 @@ class SampleRouter : BaseRouter
         return NormalizeState(position, (points[targetPointIndex] - position) * weight1 + (points[targetPointIndex + 1] - position) * weight2);
     }
 
-    public override Vector2 GetInitialPoint()
+    public override void ApplyMovement(Transform transform, float deltaTime, float speed)
     {
-        return points[0];
+        transform.Translate(Time.deltaTime * GetMovement(transform) * speed);
     }
 
     protected override BaseRouter CreateInstance()
     {
         return new SampleRouter();
+    }
+}
+
+class NavMeshAgentRouter : BaseRouter
+{
+    private bool initialized = false;
+
+    public override void SetPosition(Transform transform, Vector3 position)
+    {
+        transform.gameObject.GetComponent<NavMeshAgent>().Warp(position);
+    }
+
+    public override void ApplyMovement(Transform transform, float deltaTime, float speed)
+    {
+        var currentTargetPointIndex = targetPointIndex;
+        NormalizeState(transform.position, (transform.position - points[targetPointIndex]));
+        transform.gameObject.GetComponent<NavMeshAgent>().enabled = true;
+        if (!initialized || targetPointIndex < points.Count && targetPointIndex != currentTargetPointIndex) {
+            var agent = transform.gameObject.GetComponent<NavMeshAgent>();
+            agent.speed = speed;
+            agent.SetDestination(points[targetPointIndex]);
+            initialized = true;
+        }
+    }
+
+    protected override BaseRouter CreateInstance()
+    {
+        return new NavMeshAgentRouter();
     }
 }

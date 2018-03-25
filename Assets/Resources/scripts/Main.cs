@@ -35,14 +35,14 @@ public class Main : MonoBehaviour {
     private void Start()
     {
         var mainTowerObject = GameObject.FindGameObjectWithTag("MainTower");
-        var finalPoint = BaseRouter.GetObjectPosition(mainTowerObject.transform);
+        var finalPoint = mainTowerObject.transform.position;
 
         foreach (var routerObject in GameObject.FindGameObjectsWithTag("Router"))
         {
-            var router = new SampleRouter();
-            router.points = new List<Vector2>();
+            var router = new NavMeshAgentRouter();
+            router.points = new List<Vector3>();
             for (int i = 0; i < routerObject.transform.childCount; ++i)
-                router.points.Add(BaseRouter.GetObjectPosition(routerObject.transform.GetChild(i).transform));
+                router.points.Add(routerObject.transform.GetChild(i).transform.position);
             router.points.Add(finalPoint);
             routers.Add(router);
         }
@@ -56,8 +56,7 @@ public class Main : MonoBehaviour {
         var unit = Instantiate(units[Random.Range(0, units.Length)], unitCollection.transform);
         var router = routers[Random.Range(0, routers.Count)];
         unit.GetComponent<Unit>().SetUp(router.CopyInstance(), mainTower);
-        var initialPoint = router.GetInitialPoint();
-        unit.transform.position = new Vector3(initialPoint.x, 0, initialPoint.y);
+        router.SetPosition(unit.transform, router.GetInitialPoint());
     }
 
     public void OnMouseUp()
