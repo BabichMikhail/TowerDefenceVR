@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
-public class Unit : MonoBehaviour {
+public class UnitController : MonoBehaviour {
     public int health = 5000;
     public int fireInterval;
     public float attackRadius;
@@ -21,13 +19,8 @@ public class Unit : MonoBehaviour {
             CurrentTowerDefenceState.GetInstance().ChangeBalance(100);
         }
 
-        if (router.InPlace(transform.position, attackRadius)){
-            if (lastShotTime + fireInterval < Time.time * 1000) {
-                var unitCollection = CollectionContainer.unitCollection;
-                List<Transform> availableUnits = new List<Transform>();
-                if ((targetTower.transform.position - transform.position).magnitude <= attackRadius)
-                    ShootAtTower();
-            }
+        if (lastShotTime + fireInterval < Time.time * 1000 && router.InPlace(transform.position, attackRadius) && (targetTower.transform.position - transform.position).magnitude <= attackRadius) {
+            ShootAtTower();
         } else {
             router.ApplyMovement(transform, Time.deltaTime, speed);
         }
@@ -36,9 +29,9 @@ public class Unit : MonoBehaviour {
     private void ShootAtTower()
     {
         gameObject.transform.LookAt(targetTower.transform);
-        var projectile = Instantiate(projectilePrefab, CollectionContainer.projectileCollection.transform);
+        var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
         projectile.transform.position = gameObject.transform.position; // TODO real position
-        projectile.GetComponent<Projectile>().SetUp(projectile.transform.position, targetTower.transform.position, targetTower, damage, Projectile.TargetType.TOWER);
+        projectile.GetComponent<ProjectileController>().SetUp(projectile.transform.position, targetTower.transform.position, targetTower, damage, ProjectileController.TargetType.TOWER);
         lastShotTime = (int)(Time.time * 1000);
     }
 

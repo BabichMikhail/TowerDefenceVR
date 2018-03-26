@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class TowerPosition : MonoBehaviour {
+public class TowerPositionController : MonoBehaviour {
 
     private void OnMouseUp()
     {
@@ -14,13 +12,10 @@ public class TowerPosition : MonoBehaviour {
         state.ResetTower();
         if (!enabled) {
             state.SetCurrentTower(gameObject);
-            Canvas canvas = null;
-            canvas = state.GetCurrentCanvas();
-            canvas.transform.parent = transform;
+            Canvas canvas = state.GetCurrentCanvas();
+            canvas.transform.SetParent(transform);
             canvas.transform.localPosition = new Vector3(0, 0, 0);
             canvas.enabled = true;
         }
-
-        Debug.Log("Click-Click");
     }
 }

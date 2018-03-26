@@ -2,8 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-abstract public class BaseRouter
-{
+abstract public class BaseRouter {
     public List<Vector3> points;
     public int targetPointIndex = 1;
     public bool inPlace = false;
@@ -18,7 +17,7 @@ abstract public class BaseRouter
 
     protected Vector3 NormalizeState(Vector3 position, Vector3 vector)
     {
-        if ((points[targetPointIndex] - position).sqrMagnitude < MIN_DISTANCE * MIN_DISTANCE) {
+        if (targetPointIndex < points.Count && (points[targetPointIndex] - position).sqrMagnitude < MIN_DISTANCE * MIN_DISTANCE) {
             ++targetPointIndex;
             inPlace = targetPointIndex == points.Count;
         }
@@ -40,6 +39,14 @@ abstract public class BaseRouter
         newRouter.targetPointIndex = targetPointIndex;
         return newRouter;
     }
+
+    protected Vector3 GetLastTargetPoint()
+    {
+        var point = points[points.Count - 1];
+        if (targetPointIndex < points.Count)
+            point = points[targetPointIndex];
+        return point;
+    }
 }
 
 class SampleRouter : BaseRouter
@@ -53,8 +60,8 @@ class SampleRouter : BaseRouter
     {
         Debug.Assert(targetPointIndex < points.Count);
         var position = transform.position;
-        if (targetPointIndex == points.Count - 1)
-            return NormalizeState(position, points[targetPointIndex] - position);
+        if (targetPointIndex >= points.Count - 1)
+            return NormalizeState(position, GetLastTargetPoint() - position);
         float distance1 = 100 * (points[targetPointIndex] - position).sqrMagnitude;
         float distance2 = (points[targetPointIndex + 1] - position).sqrMagnitude;
         float weight1 = distance1 / (distance1 + distance2);
@@ -85,7 +92,7 @@ class NavMeshAgentRouter : BaseRouter
     public override void ApplyMovement(Transform transform, float deltaTime, float speed)
     {
         var currentTargetPointIndex = targetPointIndex;
-        NormalizeState(transform.position, (transform.position - points[targetPointIndex]));
+        NormalizeState(transform.position, (transform.position - GetLastTargetPoint()));
         transform.gameObject.GetComponent<NavMeshAgent>().enabled = true;
         if (!initialized || targetPointIndex < points.Count && targetPointIndex != currentTargetPointIndex) {
             var agent = transform.gameObject.GetComponent<NavMeshAgent>();

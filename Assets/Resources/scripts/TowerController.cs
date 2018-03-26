@@ -1,32 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public class TowerController : MonoBehaviour
 {
     public int damage = 1000;
     public int fireInterval = 2000;
     public float radius = 5f;
 
-    private GameObject unitCollection;
-    private GameObject projectileCollection;
     private int lastShotTime = -100000;
     private GameObject projectilePrefab;
 
     private void Start()
     {
         Debug.Assert(lastShotTime + fireInterval <= 0);
-        unitCollection = CollectionContainer.unitCollection;
-        projectileCollection = CollectionContainer.projectileCollection;
     }
 
     private void Update()
     {
         if (lastShotTime + fireInterval < Time.time * 1000) {
-            List<Transform> availableUnits = new List<Transform>();
-            for (int i = 0; i < unitCollection.transform.childCount; ++i) {
-                var child = unitCollection.transform.GetChild(i);
-                //Debug.Log("Distance = " + (child.transform.position - gameObject.transform.position).magnitude);
+            var availableUnits = new List<Transform>();
+            var unitContainer = Container.GetInstance().GetUnitContainer();
+            for (int i = 0; i < unitContainer.transform.childCount; ++i) {
+                var child = unitContainer.transform.GetChild(i);
                 if ((child.transform.position - gameObject.transform.position).magnitude <= radius)
                     availableUnits.Add(child);
             }
@@ -39,9 +34,9 @@ public class Tower : MonoBehaviour
     private void ShootAt(Transform unit)
     {
         gameObject.transform.LookAt(unit); // TODO animation, rotate speed
-        var projectile = Instantiate(projectilePrefab, projectileCollection.transform);
+        var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
         projectile.transform.position = gameObject.transform.position; // TODO real position
-        projectile.GetComponent<Projectile>().SetUp(projectile.transform.position, unit.transform.position, unit.gameObject, damage, Projectile.TargetType.UNIT);
+        projectile.GetComponent<ProjectileController>().SetUp(projectile.transform.position, unit.transform.position, unit.gameObject, damage, ProjectileController.TargetType.UNIT);
         lastShotTime = (int)(Time.time * 1000);
     }
 

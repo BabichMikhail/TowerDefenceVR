@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Projectile : MonoBehaviour {
+public class ProjectileController : MonoBehaviour {
     public int approximationDegree;
     public float speed;
     public float damageRadius;
@@ -18,19 +16,15 @@ public class Projectile : MonoBehaviour {
     public enum TargetType { TOWER, UNIT }
     private TargetType targetType;
 
-    private int initialTime;
-
     private void Start()
     {
-        initialTime = (int)(Time.time * 1000);
         if (approximationDegree == 2) {
-            // speed = speed in projection on plane
+            // TODO speed = speed in projection on plane
             Vector3 route = (destinationPoint - initialPoint);
             route.y = 0;
             float flyTime = route.magnitude / speed;
             float t1 = flyTime / 2f - (initialPoint.y - destinationPoint.y) / (g * flyTime);
 
-            float alfa = Mathf.Atan((g*t1*t1/2)/(speed*t1));
             speedVector = new Vector3(
                 route.x / route.magnitude * speed,
                 g*t1,
@@ -68,17 +62,17 @@ public class Projectile : MonoBehaviour {
         if ((destinationPoint - transform.position).magnitude < 0.5) {
             if (approximationDegree == 1) {
                 if (targetType == TargetType.UNIT)
-                    destinationObject.GetComponent<Unit>().health -= damage;
+                    destinationObject.GetComponent<UnitController>().health -= damage;
                 else
-                    destinationObject.GetComponent<MainTower>().health -= damage;
+                    destinationObject.GetComponent<MainTowerController>().health -= damage;
             }
 
             if (targetType == TargetType.UNIT) {
-                var unitCollection = CollectionContainer.unitCollection;
+                var unitCollection = Container.GetInstance().GetUnitContainer();
                 for (int i = 0; i < unitCollection.transform.childCount; ++i) {
                     var childObject = unitCollection.transform.GetChild(i).gameObject;
                     if ((childObject.transform.position - destinationPoint).sqrMagnitude < damageRadius * damageRadius)
-                        childObject.GetComponent<Unit>().health -= damage;
+                        childObject.GetComponent<UnitController>().health -= damage;
                 }
             }
             Destroy(gameObject);

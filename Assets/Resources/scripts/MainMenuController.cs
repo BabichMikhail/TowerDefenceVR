@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour {
+public class MainMenuController : MonoBehaviour {
     public void OnClickGame()
     {
         SceneManager.LoadScene("Main");

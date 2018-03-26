@@ -4,10 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Router
-  - RoutePoint
-  - MainTower
-  - Tower
+  - UnitContainer
+  - RouteContainer
+  - TowerContainer
+  - ProjectileContainer
+  - CreateTowerCanvas
+  - UpdateTowerCanvas
   layers:
   - Default
   - TransparentFX

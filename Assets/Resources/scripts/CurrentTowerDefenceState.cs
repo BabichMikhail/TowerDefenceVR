@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class CurrentTowerDefenceState
-{
+public class CurrentTowerDefenceState {
     private static CurrentTowerDefenceState instance;
-    private static Canvas createTowerCanvas;
-    private static Canvas changeTowerCanvas;
-    public enum UpgradeTypes { UPDRADE_SPEED, UPGRADE_DAMAGE }
+    private Canvas createTowerCanvas;
+    private Canvas updateTowerCanvas;
+    public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
 
     public int balance = 100;
 
-    private CurrentTowerDefenceState() { }
+    private CurrentTowerDefenceState()
+    {
+        createTowerCanvas = Container.GetInstance().GetCreateTowerCanvas();
+        updateTowerCanvas = Container.GetInstance().GetUpdateTowerCanvas();
+    }
 
     public static CurrentTowerDefenceState GetInstance()
     {
@@ -19,21 +22,15 @@ public class CurrentTowerDefenceState
         return instance;
     }
 
-    public void SetCanvases(Canvas createTower, Canvas changeTower)
-    {
-        createTowerCanvas = createTower;
-        changeTowerCanvas = changeTower;
-    }
-
     public bool GetCanvasEnabled()
     {
         return
-            createTowerCanvas.GetComponent<Canvas>().enabled ||
-            changeTowerCanvas.GetComponent<Canvas>().enabled;
+            createTowerCanvas.enabled ||
+            updateTowerCanvas.enabled;
     }
 
     private GameObject currentTower;
-    private Dictionary<string, Tower> createdTowers = new Dictionary<string, Tower>();
+    private Dictionary<string, TowerController> createdTowers = new Dictionary<string, TowerController>();
 
     public bool TowerIsCurrent(GameObject tower)
     {
@@ -61,13 +58,13 @@ public class CurrentTowerDefenceState
 
     public Canvas GetCurrentCanvas()
     {
-        return TowerExists() ? changeTowerCanvas : createTowerCanvas;
+        return TowerExists() ? updateTowerCanvas : createTowerCanvas;
     }
 
     public void ResetTower()
     {
-        createTowerCanvas.GetComponent<Canvas>().enabled = false;
-        changeTowerCanvas.GetComponent<Canvas>().enabled = false;
+        createTowerCanvas.enabled = false;
+        updateTowerCanvas.enabled = false;
         SetCurrentTower(null);
     }
 
@@ -77,20 +74,19 @@ public class CurrentTowerDefenceState
         Debug.Assert(tower != null);
         Debug.Assert(!createdTowers.ContainsKey(tower.name));
         var newTower = Object.Instantiate(towerPrefab, tower.transform);
-        newTower.GetComponent<Tower>().SetProjectile(projectile);
+        newTower.GetComponent<TowerController>().SetProjectile(projectile);
         newTower.transform.localPosition = new Vector3(0, 0, 0);
-        createdTowers[tower.name] = newTower.GetComponent<Tower>();
-        Debug.Log(tower.name);
+        createdTowers[tower.name] = newTower.GetComponent<TowerController>();
         ResetTower();
         return newTower;
     }
 
-    public void UpdgradeCurrentTower(UpgradeTypes upgradeType, int value)
+    public void UpdateCurrentTower(UpdateTypes updateType, int value)
     {
-        var tower = GetCurrentTower().GetComponent<Tower>();
-        if (upgradeType == UpgradeTypes.UPGRADE_DAMAGE) {
+        var tower = GetCurrentTower().GetComponent<TowerController>();
+        if (updateType == UpdateTypes.UPDATE_DAMAGE) {
             tower.damage += value;
-        } else if (upgradeType == UpgradeTypes.UPDRADE_SPEED) {
+        } else if (updateType == UpdateTypes.UPDATE_SPEED) {
             tower.fireInterval -= value;
         }
         ResetTower();
