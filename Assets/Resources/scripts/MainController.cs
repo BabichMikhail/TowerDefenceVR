@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MainController : MonoBehaviour {
     private List<BaseRouter> routers = new List<BaseRouter>();
@@ -13,6 +14,8 @@ public class MainController : MonoBehaviour {
     private void Start()
     {
         var routeContainer = Container.GetInstance().GetRouteContainer();
+        var collider = mainTower.GetComponentInChildren<Collider>();
+        Debug.Assert(collider != null);
         for (var i = 0; i < routeContainer.transform.childCount; ++i) {
             var routerObject = routeContainer.transform.GetChild(i);
             var router = new NavMeshAgentRouter();
@@ -20,6 +23,7 @@ public class MainController : MonoBehaviour {
             for (int j = 0; j < routerObject.transform.childCount; ++j)
                 router.points.Add(routerObject.transform.GetChild(j).transform.position);
             router.points.Add(mainTower.transform.position);
+            router.targetCollider = collider;
             routers.Add(router);
         }
     }
@@ -30,12 +34,13 @@ public class MainController : MonoBehaviour {
         var router = routers[Random.Range(0, routers.Count)];
         unit.GetComponent<UnitController>().SetUp(router.CopyInstance(), mainTower);
         router.SetPosition(unit.transform, router.GetInitialPoint());
+        unit.GetComponent<NavMeshAgent>().enabled = true;
     }
 
-    public void OnMouseUp()
-    {
-        SendUnit();
-    }
+    //public void OnMouseUp()
+    //{
+    //    SendUnit();
+    //}
 
     public void createArchedTower()
     {

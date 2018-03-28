@@ -12,15 +12,22 @@ public class UnitController : MonoBehaviour {
     private float speed = 0.20f;
     private int lastShotTime = -10000;
 
+    private bool canShootAtTower()
+    {
+        return (targetTower.GetComponentInChildren<BoxCollider>().ClosestPoint(transform.position) - transform.position).sqrMagnitude <= attackRadius * attackRadius;
+    }
+
     public void Update()
     {
         if (health <= 0) {
-            Destroy(gameObject);
             CurrentTowerDefenceState.GetInstance().ChangeBalance(100);
+            Destroy(gameObject);
+            return;
         }
 
-        if (lastShotTime + fireInterval < Time.time * 1000 && router.InPlace(transform.position, attackRadius) && (targetTower.transform.position - transform.position).magnitude <= attackRadius) {
-            ShootAtTower();
+        if (router.InPlace(transform.position, attackRadius) && canShootAtTower()) {
+            if (lastShotTime + fireInterval < Time.time * 1000)
+                ShootAtTower();
         } else {
             router.ApplyMovement(transform, Time.deltaTime, speed);
         }

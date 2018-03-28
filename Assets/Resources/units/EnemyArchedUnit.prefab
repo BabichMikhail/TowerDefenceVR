@@ -151,7 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5000
   fireInterval: 1000
-  attackRadius: 2
+  attackRadius: 4
   damage: 100
   projectilePrefab: {fileID: 1454275863632936, guid: 70dcfc518cef4134daea52dafdb4ade3,
     type: 2}
@@ -174,7 +174,7 @@ NavMeshAgent:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1610105699836364}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5

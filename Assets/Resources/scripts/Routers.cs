@@ -4,9 +4,10 @@ using UnityEngine.AI;
 
 abstract public class BaseRouter {
     public List<Vector3> points;
+    public Collider targetCollider;
     public int targetPointIndex = 1;
     public bool inPlace = false;
-    protected const float MIN_DISTANCE = 0.5f;
+    protected const float MIN_DISTANCE = 2f;
     abstract public void ApplyMovement(Transform transform, float deltaTime, float speed);
     abstract public void SetPosition(Transform transform, Vector3 position);
 
@@ -27,7 +28,7 @@ abstract public class BaseRouter {
 
     public bool InPlace(Vector3 position, float minDistance)
     {
-        inPlace = inPlace || (points[points.Count - 1] - position).magnitude < Mathf.Min(minDistance, MIN_DISTANCE);
+        inPlace = inPlace || (targetCollider.ClosestPoint(position) - position).magnitude < Mathf.Min(minDistance, MIN_DISTANCE);
         return inPlace;
     }
 
@@ -37,6 +38,7 @@ abstract public class BaseRouter {
         var newRouter = CreateInstance();
         newRouter.points = points;
         newRouter.targetPointIndex = targetPointIndex;
+        newRouter.targetCollider = targetCollider;
         return newRouter;
     }
 
@@ -96,7 +98,7 @@ class NavMeshAgentRouter : BaseRouter
         transform.gameObject.GetComponent<NavMeshAgent>().enabled = true;
         if (!initialized || targetPointIndex < points.Count && targetPointIndex != currentTargetPointIndex) {
             var agent = transform.gameObject.GetComponent<NavMeshAgent>();
-            agent.speed = speed;
+            agent.speed = 50 * speed;
             agent.SetDestination(points[targetPointIndex]);
             initialized = true;
         }
