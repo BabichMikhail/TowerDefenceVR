@@ -28,6 +28,11 @@ public class MainController : MonoBehaviour {
         }
     }
 
+    private void Update()
+    {
+        Music.Update();
+    }
+
     public void SendUnit()
     {
         var unit = Instantiate(units[Random.Range(0, units.Length)], Container.GetInstance().GetUnitContainer().transform);
@@ -36,11 +41,6 @@ public class MainController : MonoBehaviour {
         router.SetPosition(unit.transform, router.GetInitialPoint());
         unit.GetComponent<NavMeshAgent>().enabled = true;
     }
-
-    //public void OnMouseUp()
-    //{
-    //    SendUnit();
-    //}
 
     public void createArchedTower()
     {

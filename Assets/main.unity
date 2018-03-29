@@ -329,7 +329,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 122007462}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.424, y: -3.34, z: 4.856}
+  m_LocalPosition: {x: 1.424, y: -4.65, z: 5.135}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 35185327}
@@ -474,7 +474,6 @@ GameObject:
   - component: {fileID: 155919791}
   - component: {fileID: 155919790}
   - component: {fileID: 155919789}
-  - component: {fileID: 155919792}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -549,17 +548,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 155919787}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &155919792
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 155919787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e7753b51e4c7e6438a318933f5a3af6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &167551703
 GameObject:
   m_ObjectHideFlags: 0
@@ -2331,7 +2319,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 499448596}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.424, y: -3.34, z: 4.459}
+  m_LocalPosition: {x: 1.291, y: -3.83, z: 3.849}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 494684298}
@@ -3724,7 +3712,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 646883670}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.664, y: 0.69, z: 2.825}
+  m_LocalPosition: {x: 2.536, y: -0.48, z: 2.993}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 35185327}
@@ -6871,7 +6859,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1277207824}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.509, y: -2.31, z: 3.123}
+  m_LocalPosition: {x: 0.554, y: -3.81, z: 3.201}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 494684298}
@@ -7785,7 +7773,7 @@ GameObject:
   - component: {fileID: 1568964549}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10824,7 +10812,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2010366193}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.498, y: -1.901, z: 3.543}
+  m_LocalPosition: {x: 2.595, y: -2.23, z: 3.543}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 35185327}
