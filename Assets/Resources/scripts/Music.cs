@@ -1,5 +1,5 @@
-﻿ using Unity;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 class Music {
     private Music() {}
@@ -17,6 +17,7 @@ class Music {
     private float time;
     private AudioSource audio;
     private GameObject parentObject;
+    private static bool playing = true;
 
     public void PlayGlobalMusic(GameObject newParent)
     {
@@ -46,7 +47,21 @@ class Music {
 
     public static void Update()
     {
-        GetInstance().PlayGlobalMusic(GameObject.FindGameObjectWithTag("MainCamera"));
+        instance = GetInstance();
+        if (playing && (instance.audio == null || instance.audio.isPlaying))
+            instance.PlayGlobalMusic(GameObject.FindGameObjectWithTag("MainCamera"));
+    }
+
+    public bool SwitchSound(RawImage line)
+    {
+        Debug.Assert(audio != null);
+        if (audio.isPlaying)
+            StopGlobalMusic();
+        else
+            PlayGlobalMusic(null);
+        line.enabled = !audio.isPlaying;
+        playing = audio.isPlaying;
+        return audio.isPlaying;
     }
 
     public void StopGlobalMusic()
