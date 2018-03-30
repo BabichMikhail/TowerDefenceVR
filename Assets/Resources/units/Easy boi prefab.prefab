@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 4560692419920698}
   - component: {fileID: 95585841465269166}
   m_Layer: 0
-  m_Name: Easy boi unity
+  m_Name: Easy boi prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1105,6 +1105,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!137 &137071016977556728
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1118,6 +1119,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: d3d0cd564fd92c24089afad88282f286, type: 2}
   m_StaticBatchInfo:
@@ -1195,6 +1197,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 08a1ee52036f52044a3dcf73267df4f5, type: 2}
   m_StaticBatchInfo:
@@ -1272,6 +1275,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 9562ff7e9b8b0084aad4518b627b7f49, type: 2}
   m_StaticBatchInfo:
@@ -1349,6 +1353,7 @@ SkinnedMeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: d9fed049aa054d446914faf2b1bf7496, type: 2}
   m_StaticBatchInfo:
