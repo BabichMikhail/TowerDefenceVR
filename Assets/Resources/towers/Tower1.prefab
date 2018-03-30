@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 4288649206387446}
   - component: {fileID: 33320781701576180}
   - component: {fileID: 23552302311850582}
+  - component: {fileID: 114296084922577394}
   m_Layer: 0
   m_Name: gear
   m_TagString: Untagged
@@ -54,6 +55,7 @@ GameObject:
   - component: {fileID: 4917904183049508}
   - component: {fileID: 33569406408509824}
   - component: {fileID: 23873337085493188}
+  - component: {fileID: 114386045486858436}
   m_Layer: 0
   m_Name: gear (1)
   m_TagString: Untagged
@@ -305,3 +307,27 @@ MonoBehaviour:
   firePoint: {x: -0.8051, y: 18.06, z: 0.0762}
   projectilePrefab: {fileID: 1382056256112486, guid: d5af9ca0c36e5434f9eb0793b4a79f8a,
     type: 2}
+--- !u!114 &114296084922577394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1431098905981824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24c82a1118547940aa01d244b648a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+--- !u!114 &114386045486858436
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1643906736171970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b24c82a1118547940aa01d244b648a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1

@@ -49,10 +49,10 @@ public class CurrentTowerDefenceState {
     public void SetCurrentTower(GameObject tower)
     {
         if (currentTower != null)
-            currentTower.GetComponentInChildren<MeshRenderer>().material = Resources.Load<Material>("materials/YelloMaterial");
+            currentTower.GetComponentInChildren<MeshRenderer>().material = Resources.Load<Material>("materials/Location/Teapot Tower Material");
         currentTower = tower;
         if (currentTower != null)
-            currentTower.GetComponentInChildren<MeshRenderer>().material = Resources.Load<Material>("materials/BlueMaterial");
+            currentTower.GetComponentInChildren<MeshRenderer>().material = Resources.Load<Material>("materials/Location/Gear");
     }
 
     public GameObject GetCurrentTower()

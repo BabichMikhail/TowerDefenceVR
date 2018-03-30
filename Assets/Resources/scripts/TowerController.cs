@@ -38,7 +38,7 @@ public class TowerController : MonoBehaviour
         transform.localPosition += firePoint;
         projectile.transform.position = transform.position;
         transform.localPosition -= firePoint;
-        projectile.GetComponent<ProjectileController>().SetUp(gameObject.transform.position, unit.transform.position, unit.gameObject, damage, ProjectileController.TargetType.UNIT);
+        projectile.GetComponent<ProjectileController>().SetUp(projectile.transform.position, unit.transform.position, unit.gameObject, damage, ProjectileController.TargetType.UNIT);
         lastShotTime = (int)(Time.time * 1000);
     }
 

@@ -98,7 +98,7 @@ class NavMeshAgentRouter : BaseRouter
         transform.gameObject.GetComponent<NavMeshAgent>().enabled = true;
         if (!initialized || targetPointIndex < points.Count && targetPointIndex != currentTargetPointIndex) {
             var agent = transform.gameObject.GetComponent<NavMeshAgent>();
-            agent.speed = 50 * speed;
+            agent.speed = speed;
             agent.SetDestination(points[targetPointIndex]);
             initialized = true;
         }

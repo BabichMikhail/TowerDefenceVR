@@ -11,7 +11,6 @@ public class TowerPositionController : MonoBehaviour {
     {
         for (int i = 0; i < transform.childCount; ++i)
             initialComponents.Add(transform.GetChild(i).gameObject);
-        Debug.Log(transform.childCount);
     }
 
     private void OnMouseUp()
