@@ -8,7 +8,7 @@ public class CurrentTowerDefenceState {
     private Vector3 worldScale = new Vector3(1.0f, 1.0f, 1.0f);
     public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
 
-    public int balance = 100;
+    private int balance = 200;
 
     private CurrentTowerDefenceState()
     {
@@ -96,9 +96,15 @@ public class CurrentTowerDefenceState {
         ResetTower();
     }
 
+    public int GetBalance()
+    {
+        return balance;
+    }
+
     public void ChangeBalance(int delta)
     {
         balance += delta;
+        UpdateTowerPositionMaterials();
     }
 
     public bool CanCreateNextTower(int idx)
@@ -106,20 +112,39 @@ public class CurrentTowerDefenceState {
         return Container.GetInstance().GetTowers().Length > idx;
     }
 
+    public bool CanCreateTower()
+    {
+        return createTowerCost <= balance;
+    }
+
+    public const int createTowerCost = 100;
+
     public void CreateNextTower(TowerPositionController controller)
     {
-        Debug.Log("Hello world");
-        //createdTowers[tower.name] = newTower.GetComponent<TowerController>();
         var idx = controller.GetCurrentTowerToCreateIndex();
         Debug.Assert(CanCreateNextTower(idx));
         var towerPrefab = Container.GetInstance().GetTowers()[idx];
-        //var gameObject = controller.gameObject;
         var tower = GetCurrentTower();
         var newTower = Object.Instantiate(towerPrefab, tower.transform);
-        //newTower.transform.localPosition = new Vector3(0, 0, 0);
         controller.IncreaseTowerToCreateIndex();
         if (!CanCreateNextTower(controller.GetCurrentTowerToCreateIndex()))
             controller.DisableInitialComponents();
         ResetTower();
+        ChangeBalance(-createTowerCost);
+        UpdateTowerPositionMaterials();
+    }
+
+    public void UpdateTowerPositionMaterials()
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("TowerPositionChild");
+        var material = Resources.Load<Material>("materials/DarkRedMaterial");
+        if (balance >= createTowerCost) {
+            material = currentTower == null ? Resources.Load<Material>("materials/Location/Teapot Tower Material") : Resources.Load<Material>("materials/Location/Gear");
+        }
+        for (int i = 0; i < objects.Length; ++i) {
+            var renderer = objects[i].GetComponent<MeshRenderer>();
+            renderer.material = material;
+        }
+        Debug.Log("UPDATE MATERIALS");
     }
 }

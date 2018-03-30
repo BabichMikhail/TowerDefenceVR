@@ -15,7 +15,7 @@ public class TowerPositionController : MonoBehaviour {
 
     private void OnMouseUp()
     {
-        if (disabled || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        if (disabled || !CurrentTowerDefenceState.GetInstance().CanCreateTower() || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             return;
         var state = CurrentTowerDefenceState.GetInstance();
         var enabled = state.GetCanvasEnabled();

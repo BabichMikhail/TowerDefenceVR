@@ -48,13 +48,13 @@ public class MainController : MonoBehaviour {
     public void createOrUpdateTower()
     {
         var state = CurrentTowerDefenceState.GetInstance();
+        Debug.Assert(state.GetBalance() >= CurrentTowerDefenceState.createTowerCost);
         var controller = state.GetCurrentTower().GetComponent<TowerPositionController>();
         state.CreateNextTower(controller);
     }
 
     public void deselectTower()
     {
-        //CurrentTowerDefenceState.GetInstance().SetCurrentTower(null);
         CurrentTowerDefenceState.GetInstance().ResetTower();
     }
 }

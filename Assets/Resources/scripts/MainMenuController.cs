@@ -15,6 +15,11 @@ public class MainMenuController : MonoBehaviour {
         SceneManager.LoadScene("Main");
     }
 
+    public void OnClickContinue()
+    {
+        gameObject.GetComponent<Canvas>().enabled = false;
+    }
+
     public void OnClickSound()
     {
         Music.GetInstance().SwitchSound(line);
@@ -23,5 +28,10 @@ public class MainMenuController : MonoBehaviour {
     public void OnClickExit()
     {
         Application.Quit();
+    }
+
+    public void OnClickMenu()
+    {
+        gameObject.GetComponent<Canvas>().enabled = true;
     }
 }

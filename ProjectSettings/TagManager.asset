@@ -10,6 +10,7 @@ TagManager:
   - ProjectileContainer
   - CreateTowerCanvas
   - UpdateTowerCanvas
+  - TowerPositionChild
   layers:
   - Default
   - TransparentFX
