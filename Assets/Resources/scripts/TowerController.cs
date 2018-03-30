@@ -34,10 +34,11 @@ public class TowerController : MonoBehaviour
 
     private void ShootAt(Transform unit)
     {
-        //gameObject.transform.LookAt(unit); // TODO animation, rotate speed
         var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
-        projectile.transform.position = gameObject.transform.position; // TODO real position
-        projectile.GetComponent<ProjectileController>().SetUp(projectile.transform.position, unit.transform.position, unit.gameObject, damage, ProjectileController.TargetType.UNIT);
+        transform.localPosition += firePoint;
+        projectile.transform.position = transform.position;
+        transform.localPosition -= firePoint;
+        projectile.GetComponent<ProjectileController>().SetUp(gameObject.transform.position, unit.transform.position, unit.gameObject, damage, ProjectileController.TargetType.UNIT);
         lastShotTime = (int)(Time.time * 1000);
     }
 

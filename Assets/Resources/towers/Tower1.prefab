@@ -302,6 +302,6 @@ MonoBehaviour:
   damage: 1000
   fireInterval: 2000
   radius: 1000
-  firePoint: {x: 0, y: 0, z: 0}
+  firePoint: {x: -0.8051, y: 18.06, z: 0.0762}
   projectilePrefab: {fileID: 1382056256112486, guid: d5af9ca0c36e5434f9eb0793b4a79f8a,
     type: 2}
