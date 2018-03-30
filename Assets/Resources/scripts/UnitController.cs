@@ -9,7 +9,7 @@ public class UnitController : MonoBehaviour {
 
     private BaseRouter router;
     private GameObject targetTower;
-    private float speed = 0.20f;
+    private float speed = 1.0f;
     private int lastShotTime = -10000;
 
     private bool canShootAtTower()
