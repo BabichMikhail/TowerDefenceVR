@@ -17,6 +17,7 @@ public class MainMenuController : MonoBehaviour {
 
     public void OnClickContinue()
     {
+        Time.timeScale = 1.0f;
         gameObject.GetComponent<Canvas>().enabled = false;
     }
 
@@ -32,6 +33,7 @@ public class MainMenuController : MonoBehaviour {
 
     public void OnClickMenu()
     {
+        Time.timeScale = 0.0f;
         gameObject.GetComponent<Canvas>().enabled = true;
     }
 }

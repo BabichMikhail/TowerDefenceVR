@@ -8,7 +8,7 @@ public class CurrentTowerDefenceState {
     private Vector3 worldScale = new Vector3(1.0f, 1.0f, 1.0f);
     public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
 
-    private int balance = 200;
+    private int balance = 500;
 
     private CurrentTowerDefenceState()
     {

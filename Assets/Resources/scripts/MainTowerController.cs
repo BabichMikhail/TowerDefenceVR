@@ -2,11 +2,15 @@
 
 public class MainTowerController : MonoBehaviour {
     public int health = 10000;
+    public GameObject defeatMenu;
+    public GameObject gameMenu;
 
     private void Update()
     {
         health = Mathf.Max(health, 0);
-        if (health == 0)
-            Debug.Log("FAIL");
+        if (health == 0) {
+            gameMenu.GetComponent<Canvas>().enabled = false;
+            defeatMenu.GetComponent<Canvas>().enabled = true;
+        }
     }
 }
