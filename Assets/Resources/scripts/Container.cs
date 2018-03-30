@@ -7,6 +7,7 @@ public class Container {
     private static GameObject towerContainer;
     private static Canvas createTowerCanvas;
     private static Canvas updateTowerCanvas;
+    private static GameObject[] towers;
 
     private static Container instance;
 
@@ -27,6 +28,8 @@ public class Container {
         return instance;
     }
 
+    public void SetTowers(GameObject[] towers) { Container.towers = towers;  }
+    public GameObject[] GetTowers() { return towers; }
     public GameObject GetUnitContainer() { return unitContainer; }
     public GameObject GetProjectileContainer() { return projectileContainer; }
     public GameObject GetRouteContainer() { return routeContainer; }

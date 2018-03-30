@@ -1,9 +1,23 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class TowerPositionController : MonoBehaviour {
+    private int towerToCreateIndex;
+    private bool disabled = false;
+
+    private List<GameObject> initialComponents = new List<GameObject>();
+
+    private void Awake()
+    {
+        for (int i = 0; i < transform.childCount; ++i)
+            initialComponents.Add(transform.GetChild(i).gameObject);
+        Debug.Log(transform.childCount);
+    }
 
     private void OnMouseUp()
     {
+        if (disabled)
+            return;
         var state = CurrentTowerDefenceState.GetInstance();
         var enabled = state.GetCanvasEnabled();
         if (enabled && !state.TowerIsCurrent(gameObject))
@@ -13,9 +27,25 @@ public class TowerPositionController : MonoBehaviour {
         if (!enabled) {
             state.SetCurrentTower(gameObject);
             Canvas canvas = state.GetCurrentCanvas();
-            canvas.transform.SetParent(transform);
             canvas.transform.localPosition = new Vector3(0, 0, 0);
             canvas.enabled = true;
         }
+    }
+
+    public int GetCurrentTowerToCreateIndex()
+    {
+        return towerToCreateIndex;
+    }
+
+    public void IncreaseTowerToCreateIndex()
+    {
+        ++towerToCreateIndex;
+    }
+
+    public void DisableInitialComponents()
+    {
+        foreach (var obj in initialComponents)
+            Destroy(obj);
+        disabled = true;
     }
 }

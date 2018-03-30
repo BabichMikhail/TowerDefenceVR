@@ -5,6 +5,7 @@ public class CurrentTowerDefenceState {
     private static CurrentTowerDefenceState instance;
     private Canvas createTowerCanvas;
     private Canvas updateTowerCanvas;
+    private Vector3 worldScale = new Vector3(1.0f, 1.0f, 1.0f);
     public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
 
     public int balance = 100;
@@ -21,6 +22,9 @@ public class CurrentTowerDefenceState {
             instance = new CurrentTowerDefenceState();
         return instance;
     }
+
+    public void SetWorldScale(Vector3 scale) { worldScale = scale; }
+    public Vector3 GetWorldScale() { return worldScale; }
 
     public bool GetCanvasEnabled()
     {
@@ -95,5 +99,27 @@ public class CurrentTowerDefenceState {
     public void ChangeBalance(int delta)
     {
         balance += delta;
+    }
+
+    public bool CanCreateNextTower(int idx)
+    {
+        return Container.GetInstance().GetTowers().Length > idx;
+    }
+
+    public void CreateNextTower(TowerPositionController controller)
+    {
+        Debug.Log("Hello world");
+        //createdTowers[tower.name] = newTower.GetComponent<TowerController>();
+        var idx = controller.GetCurrentTowerToCreateIndex();
+        Debug.Assert(CanCreateNextTower(idx));
+        var towerPrefab = Container.GetInstance().GetTowers()[idx];
+        //var gameObject = controller.gameObject;
+        var tower = GetCurrentTower();
+        var newTower = Object.Instantiate(towerPrefab, tower.transform);
+        //newTower.transform.localPosition = new Vector3(0, 0, 0);
+        controller.IncreaseTowerToCreateIndex();
+        if (!CanCreateNextTower(controller.GetCurrentTowerToCreateIndex()))
+            controller.DisableInitialComponents();
+        ResetTower();
     }
 }

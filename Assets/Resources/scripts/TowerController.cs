@@ -5,10 +5,11 @@ public class TowerController : MonoBehaviour
 {
     public int damage = 1000;
     public int fireInterval = 2000;
-    public float radius = 5f;
+    public float radius = 20f;
+    public Vector3 firePoint = new Vector3(0, 0, 0);
+    public GameObject projectilePrefab;
 
     private int lastShotTime = -100000;
-    private GameObject projectilePrefab;
 
     private void Start()
     {
@@ -33,7 +34,7 @@ public class TowerController : MonoBehaviour
 
     private void ShootAt(Transform unit)
     {
-        gameObject.transform.LookAt(unit); // TODO animation, rotate speed
+        //gameObject.transform.LookAt(unit); // TODO animation, rotate speed
         var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
         projectile.transform.position = gameObject.transform.position; // TODO real position
         projectile.GetComponent<ProjectileController>().SetUp(projectile.transform.position, unit.transform.position, unit.gameObject, damage, ProjectileController.TargetType.UNIT);

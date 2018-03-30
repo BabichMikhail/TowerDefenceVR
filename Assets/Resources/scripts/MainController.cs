@@ -11,6 +11,14 @@ public class MainController : MonoBehaviour {
     public GameObject siegeTower;
     public GameObject siegeProjectile;
 
+    public GameObject[] towers;
+
+    private void Awake()
+    {
+        Container.GetInstance().SetTowers(towers);
+        CurrentTowerDefenceState.GetInstance().SetWorldScale(gameObject.transform.localScale);
+    }
+
     private void Start()
     {
         var routeContainer = Container.GetInstance().GetRouteContainer();
@@ -41,28 +49,43 @@ public class MainController : MonoBehaviour {
         router.SetPosition(unit.transform, router.GetInitialPoint());
         unit.GetComponent<NavMeshAgent>().enabled = true;
     }
+    /*
+        public void createArchedTower()
+        {
+            Debug.Log("Arched tower");
+            CurrentTowerDefenceState.GetInstance().CreateTower(archedTower, archedProjectile);
+        }
 
-    public void createArchedTower()
+        public void createSiegeTower()
+        {
+            Debug.Log("Siege tower");
+            CurrentTowerDefenceState.GetInstance().CreateTower(siegeTower, siegeProjectile);
+        }
+
+        public void increaseTowerSpeed()
+        {
+            Debug.Log("Tower speed");
+            CurrentTowerDefenceState.GetInstance().UpdateCurrentTower(CurrentTowerDefenceState.UpdateTypes.UPDATE_SPEED, 1);
+        }
+
+        public void increaseTowerDamage()
+        {
+            Debug.Log("Tower damage");
+            CurrentTowerDefenceState.GetInstance().UpdateCurrentTower(CurrentTowerDefenceState.UpdateTypes.UPDATE_DAMAGE, 1);
+        }*/
+
+    public void createOrUpdateTower()
     {
-        Debug.Log("Arched tower");
-        CurrentTowerDefenceState.GetInstance().CreateTower(archedTower, archedProjectile);
+        var state = CurrentTowerDefenceState.GetInstance();
+        var controller = state.GetCurrentTower().GetComponent<TowerPositionController>();
+        state.CreateNextTower(controller);
+
+        // TODO invisible child circle
     }
 
-    public void createSiegeTower()
+    public void deselectTower()
     {
-        Debug.Log("Siege tower");
-        CurrentTowerDefenceState.GetInstance().CreateTower(siegeTower, siegeProjectile);
-    }
-
-    public void increaseTowerSpeed()
-    {
-        Debug.Log("Tower speed");
-        CurrentTowerDefenceState.GetInstance().UpdateCurrentTower(CurrentTowerDefenceState.UpdateTypes.UPDATE_SPEED, 1);
-    }
-
-    public void increaseTowerDamage()
-    {
-        Debug.Log("Tower damage");
-        CurrentTowerDefenceState.GetInstance().UpdateCurrentTower(CurrentTowerDefenceState.UpdateTypes.UPDATE_DAMAGE, 1);
+        //CurrentTowerDefenceState.GetInstance().SetCurrentTower(null);
+        CurrentTowerDefenceState.GetInstance().ResetTower();
     }
 }
