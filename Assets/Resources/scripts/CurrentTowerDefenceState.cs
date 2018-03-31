@@ -3,18 +3,16 @@ using UnityEngine;
 
 public class CurrentTowerDefenceState {
     private static CurrentTowerDefenceState instance;
-    private Canvas createTowerCanvas;
-    private Canvas updateTowerCanvas;
     private Vector3 worldScale = new Vector3(1.0f, 1.0f, 1.0f);
     public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
 
-    private int balance = 500;
+    private const int DEFAULT_BALANCE = 500;
+    private int balance = DEFAULT_BALANCE;
 
-    private CurrentTowerDefenceState()
-    {
-        createTowerCanvas = Container.GetInstance().GetCreateTowerCanvas();
-        updateTowerCanvas = Container.GetInstance().GetUpdateTowerCanvas();
-    }
+    private CurrentTowerDefenceState() {}
+    public static void Reset() { instance = null; }
+    private Canvas GetCreateTowerCanvas() { return Container.GetInstance().GetCreateTowerCanvas(); }
+    private Canvas GetUpdateTowerCanvas() { return Container.GetInstance().GetUpdateTowerCanvas(); }
 
     public static CurrentTowerDefenceState GetInstance()
     {
@@ -29,8 +27,8 @@ public class CurrentTowerDefenceState {
     public bool GetCanvasEnabled()
     {
         return
-            createTowerCanvas.enabled ||
-            updateTowerCanvas.enabled;
+            GetCreateTowerCanvas().enabled ||
+            GetUpdateTowerCanvas().enabled;
     }
 
     private GameObject currentTower;
@@ -62,13 +60,13 @@ public class CurrentTowerDefenceState {
 
     public Canvas GetCurrentCanvas()
     {
-        return TowerExists() ? updateTowerCanvas : createTowerCanvas;
+        return TowerExists() ? GetUpdateTowerCanvas() : GetCreateTowerCanvas();
     }
 
     public void ResetTower()
     {
-        createTowerCanvas.enabled = false;
-        updateTowerCanvas.enabled = false;
+        GetCreateTowerCanvas().enabled = false;
+        GetUpdateTowerCanvas().enabled = false;
         SetCurrentTower(null);
     }
 
@@ -145,6 +143,5 @@ public class CurrentTowerDefenceState {
             var renderer = objects[i].GetComponent<MeshRenderer>();
             renderer.material = material;
         }
-        Debug.Log("UPDATE MATERIALS");
     }
 }

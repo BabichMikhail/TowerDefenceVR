@@ -36,4 +36,14 @@ public class MainMenuController : MonoBehaviour {
         Time.timeScale = 0.0f;
         gameObject.GetComponent<Canvas>().enabled = true;
     }
+
+    public void OnClickRestart()
+    {
+        Container.Reset();
+        CurrentTowerDefenceState.Reset();
+        SceneManager.LoadScene("Main");
+        Container.Reset();
+        CurrentTowerDefenceState.Reset();
+
+    }
 }

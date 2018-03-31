@@ -11,15 +11,9 @@ public class Container {
 
     private static Container instance;
 
-    private Container()
-    {
-        unitContainer = GameObject.FindGameObjectWithTag("UnitContainer");
-        projectileContainer = GameObject.FindGameObjectWithTag("ProjectileContainer");
-        routeContainer = GameObject.FindGameObjectWithTag("RouteContainer");
-        towerContainer = GameObject.FindGameObjectWithTag("TowerContainer");
-        createTowerCanvas = GameObject.FindGameObjectWithTag("CreateTowerCanvas").GetComponent<Canvas>();
-        updateTowerCanvas = GameObject.FindGameObjectWithTag("UpdateTowerCanvas").GetComponent<Canvas>();
-    }
+    private Container() {}
+
+    public static void Reset() { instance = null; }
 
     public static Container GetInstance()
     {
@@ -30,10 +24,39 @@ public class Container {
 
     public void SetTowers(GameObject[] towers) { Container.towers = towers;  }
     public GameObject[] GetTowers() { return towers; }
-    public GameObject GetUnitContainer() { return unitContainer; }
-    public GameObject GetProjectileContainer() { return projectileContainer; }
-    public GameObject GetRouteContainer() { return routeContainer; }
-    public GameObject GetTowerContainer() { return towerContainer; }
-    public Canvas GetCreateTowerCanvas() { return createTowerCanvas; }
-    public Canvas GetUpdateTowerCanvas() { return updateTowerCanvas; }
+    public GameObject GetUnitContainer()
+    {
+        if (unitContainer == null)
+            unitContainer = GameObject.FindGameObjectWithTag("UnitContainer");
+        return unitContainer;
+    }
+    public GameObject GetProjectileContainer()
+    {
+        if (projectileContainer == null)
+            projectileContainer = GameObject.FindGameObjectWithTag("ProjectileContainer");
+        return projectileContainer;
+    }
+    public GameObject GetRouteContainer()
+    {
+        if (routeContainer == null)
+            routeContainer = GameObject.FindGameObjectWithTag("RouteContainer");
+        return routeContainer;
+    }
+    public GameObject GetTowerContainer() {
+        if (towerContainer == null)
+            towerContainer = GameObject.FindGameObjectWithTag("TowerContainer");
+        return towerContainer;
+    }
+    public Canvas GetCreateTowerCanvas()
+    {
+        if (createTowerCanvas == null)
+            createTowerCanvas = GameObject.FindGameObjectWithTag("CreateTowerCanvas").GetComponent<Canvas>();
+        return createTowerCanvas;
+    }
+    public Canvas GetUpdateTowerCanvas()
+    {
+        if (updateTowerCanvas == null)
+            updateTowerCanvas = GameObject.FindGameObjectWithTag("UpdateTowerCanvas").GetComponent<Canvas>();
+        return updateTowerCanvas;
+    }
 }
