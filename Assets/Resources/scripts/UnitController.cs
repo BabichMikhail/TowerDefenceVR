@@ -24,9 +24,9 @@ public class UnitController : MonoBehaviour {
         if (disabled)
             return;
         if (health <= 0) {
-            //gameObject.GetComponent<Animator>().SetBool("Hit", true);
+            gameObject.GetComponent<Animator>().SetBool("Death", true);
             CurrentTowerDefenceState.GetInstance().ChangeBalance(100);
-            Destroy(gameObject, 1);
+            Destroy(gameObject, 4);
             disabled = true;
             return;
         }
