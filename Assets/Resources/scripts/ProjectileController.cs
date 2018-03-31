@@ -32,6 +32,8 @@ public class ProjectileController : MonoBehaviour {
             );
             Debug.Log(speedVector);
         }
+
+        transform.rotation = (Quaternion.LookRotation(speedVector));
     }
 
     private void Update()

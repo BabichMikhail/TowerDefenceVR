@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc2e7f0388a72441a9e5acf8501b780, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1000
-  fireInterval: 2000
+  damage: 10
+  fireInterval: 500
   radius: 200
   firePoint: {x: 0.1469, y: 13.52, z: 0.0021}
   projectilePrefab: {fileID: 1454275863632936, guid: 70dcfc518cef4134daea52dafdb4ade3,
