@@ -57,6 +57,7 @@ public class Container {
     {
         if (updateTowerCanvas == null)
             updateTowerCanvas = GameObject.FindGameObjectWithTag("UpdateTowerCanvas").GetComponent<Canvas>();
+        Debug.Log(createTowerCanvas.enabled);
         return updateTowerCanvas;
     }
 }
