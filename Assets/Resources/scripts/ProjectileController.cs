@@ -5,7 +5,7 @@ public class ProjectileController : MonoBehaviour {
     public float speed;
     public float damageRadius;
 
-    const float g = 9.81f / 100;
+    const float g = 9.81f / 5;
 
     private Vector3 initialPoint;
     private Vector3 destinationPoint;
@@ -30,10 +30,9 @@ public class ProjectileController : MonoBehaviour {
                 g*t1,
                 route.z / route.magnitude * speed
             );
-            Debug.Log(speedVector);
         }
 
-        transform.rotation = (Quaternion.LookRotation(speedVector));
+        transform.LookAt(destinationObject.transform);
     }
 
     private void Update()

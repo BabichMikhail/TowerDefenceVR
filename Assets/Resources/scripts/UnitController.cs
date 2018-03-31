@@ -20,8 +20,9 @@ public class UnitController : MonoBehaviour {
     public void Update()
     {
         if (health <= 0) {
+            //gameObject.GetComponent<Animator>().SetBool("Hit", true);
             CurrentTowerDefenceState.GetInstance().ChangeBalance(100);
-            Destroy(gameObject);
+            Destroy(gameObject, 1);
             return;
         }
 
@@ -36,6 +37,7 @@ public class UnitController : MonoBehaviour {
     private void ShootAtTower()
     {
         gameObject.transform.LookAt(targetTower.transform);
+        gameObject.GetComponent<Animator>().SetBool("Hit", true);
         var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
         projectile.transform.position = gameObject.transform.position; // TODO real position
         projectile.GetComponent<ProjectileController>().SetUp(projectile.transform.position, targetTower.transform.position, targetTower, damage, ProjectileController.TargetType.TOWER);
