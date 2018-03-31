@@ -9,8 +9,10 @@ public class UnitController : MonoBehaviour {
 
     private BaseRouter router;
     private GameObject targetTower;
-    private float speed = 1.0f;
+    private float speed = 3.0f;
     private int lastShotTime = -10000;
+    private bool disabled = false;
+    private bool hitted = false;
 
     private bool canShootAtTower()
     {
@@ -19,10 +21,13 @@ public class UnitController : MonoBehaviour {
 
     public void Update()
     {
+        if (disabled)
+            return;
         if (health <= 0) {
             //gameObject.GetComponent<Animator>().SetBool("Hit", true);
             CurrentTowerDefenceState.GetInstance().ChangeBalance(100);
             Destroy(gameObject, 1);
+            disabled = true;
             return;
         }
 
@@ -37,7 +42,10 @@ public class UnitController : MonoBehaviour {
     private void ShootAtTower()
     {
         gameObject.transform.LookAt(targetTower.transform);
-        gameObject.GetComponent<Animator>().SetBool("Hit", true);
+        if (!hitted) {
+            gameObject.GetComponent<Animator>().SetBool("Hit", true);
+            hitted = true;
+        }
         var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
         projectile.transform.position = gameObject.transform.position; // TODO real position
         projectile.GetComponent<ProjectileController>().SetUp(projectile.transform.position, targetTower.transform.position, targetTower, damage, ProjectileController.TargetType.TOWER);

@@ -11,6 +11,7 @@ public class MainTowerController : MonoBehaviour {
         if (health == 0) {
             gameMenu.GetComponent<Canvas>().enabled = false;
             defeatMenu.GetComponent<Canvas>().enabled = true;
+            Time.timeScale = 0.0f;
         }
     }
 }

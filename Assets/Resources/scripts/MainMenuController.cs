@@ -39,11 +39,10 @@ public class MainMenuController : MonoBehaviour {
 
     public void OnClickRestart()
     {
-        Container.Reset();
-        CurrentTowerDefenceState.Reset();
+        Time.timeScale = 0.0f;
         SceneManager.LoadScene("Main");
         Container.Reset();
         CurrentTowerDefenceState.Reset();
-
+        Time.timeScale = 1.0f;
     }
 }

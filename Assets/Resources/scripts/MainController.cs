@@ -12,6 +12,7 @@ public class MainController : MonoBehaviour {
     {
         Container.GetInstance().SetTowers(towers);
         CurrentTowerDefenceState.GetInstance().SetWorldScale(gameObject.transform.localScale);
+        GameObject.FindGameObjectWithTag("MissingColliders").SetActive(false);
     }
 
     private void Start()
@@ -29,6 +30,9 @@ public class MainController : MonoBehaviour {
             router.targetCollider = collider;
             routers.Add(router);
         }
+        var renderers = routeContainer.GetComponentsInChildren<MeshRenderer>();
+        for (int i = 0; i < renderers.Length; ++i)
+            renderers[i].enabled = false;
     }
 
     private void Update()
