@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Container {
     private static GameObject unitContainer;
@@ -7,7 +8,7 @@ public class Container {
     private static GameObject towerContainer;
     private static Canvas createTowerCanvas;
     private static Canvas updateTowerCanvas;
-    private static GameObject[] towers;
+    private static List<GameObject[]> towers = new List<GameObject[]>();
 
     private static Container instance;
 
@@ -22,8 +23,8 @@ public class Container {
         return instance;
     }
 
-    public void SetTowers(GameObject[] towers) { Container.towers = towers;  }
-    public GameObject[] GetTowers() { return towers; }
+    public void AddTowers(GameObject[] towers) { Container.towers.Add(towers);  }
+    public GameObject[] GetTowers(int type) { return towers[type]; }
     public GameObject GetUnitContainer()
     {
         if (unitContainer == null)

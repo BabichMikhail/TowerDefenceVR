@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 
 public class TowerPositionController : MonoBehaviour {
+    public int type = 0;
+    public GameObject shootAtCenterPoint;
+
     private int towerToCreateIndex;
     private bool disabled = false;
 
@@ -10,7 +13,8 @@ public class TowerPositionController : MonoBehaviour {
     private void Awake()
     {
         for (int i = 0; i < transform.childCount; ++i)
-            initialComponents.Add(transform.GetChild(i).gameObject);
+            if (transform.GetChild(i).tag != "CenterPoint")
+                initialComponents.Add(transform.GetChild(i).gameObject);
     }
 
     private void OnMouseUp()
@@ -46,5 +50,10 @@ public class TowerPositionController : MonoBehaviour {
         foreach (var obj in initialComponents)
             Destroy(obj);
         disabled = true;
+    }
+
+    public Vector3 GetShootAtCenterPoint()
+    {
+        return shootAtCenterPoint.transform.position;
     }
 }

@@ -21,9 +21,10 @@ public class TowerController : MonoBehaviour
         if (lastShotTime + fireInterval < Time.time * 1000) {
             var availableUnits = new List<Transform>();
             var unitContainer = Container.GetInstance().GetUnitContainer();
+            var shootAtCenterPoint = transform.parent.GetComponent<TowerPositionController>().GetShootAtCenterPoint();
             for (int i = 0; i < unitContainer.transform.childCount; ++i) {
                 var child = unitContainer.transform.GetChild(i);
-                if ((child.transform.position - gameObject.transform.position).magnitude <= radius)
+                if ((child.transform.position - shootAtCenterPoint).magnitude <= radius)
                     availableUnits.Add(child);
             }
 

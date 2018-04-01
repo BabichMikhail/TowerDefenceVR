@@ -12,6 +12,7 @@ TagManager:
   - UpdateTowerCanvas
   - TowerPositionChild
   - MissingColliders
+  - CenterPoint
   layers:
   - Default
   - TransparentFX

@@ -105,9 +105,9 @@ public class CurrentTowerDefenceState {
         UpdateTowerPositionMaterials();
     }
 
-    public bool CanCreateNextTower(int idx)
+    public bool CanCreateNextTower(int idx, int type)
     {
-        return Container.GetInstance().GetTowers().Length > idx;
+        return Container.GetInstance().GetTowers(type).Length > idx;
     }
 
     public bool CanCreateTower()
@@ -120,12 +120,11 @@ public class CurrentTowerDefenceState {
     public void CreateNextTower(TowerPositionController controller)
     {
         var idx = controller.GetCurrentTowerToCreateIndex();
-        Debug.Assert(CanCreateNextTower(idx));
-        var towerPrefab = Container.GetInstance().GetTowers()[idx];
-        var tower = GetCurrentTower();
-        var newTower = Object.Instantiate(towerPrefab, tower.transform);
+        Debug.Assert(CanCreateNextTower(idx, controller.type));
+        var towerPrefab = Container.GetInstance().GetTowers(controller.type)[idx];
+        Object.Instantiate(towerPrefab, GetCurrentTower().transform);
         controller.IncreaseTowerToCreateIndex();
-        if (!CanCreateNextTower(controller.GetCurrentTowerToCreateIndex()))
+        if (!CanCreateNextTower(controller.GetCurrentTowerToCreateIndex(), controller.type))
             controller.DisableInitialComponents();
         ResetTower();
         ChangeBalance(-createTowerCost);

@@ -14,11 +14,13 @@ public class MainController : MonoBehaviour {
     private List<BaseRouter> routers = new List<BaseRouter>();
     public GameObject[] units;
     public GameObject mainTower;
-    public GameObject[] towers;
+    public GameObject[] towers0;
+    public GameObject[] towers1;
 
     private void Awake()
     {
-        Container.GetInstance().SetTowers(towers);
+        Container.GetInstance().AddTowers(towers0);
+        Container.GetInstance().AddTowers(towers1);
         CurrentTowerDefenceState.GetInstance().SetWorldScale(gameObject.transform.localScale);
         GameObject.FindGameObjectWithTag("MissingColliders").SetActive(false);
     }
