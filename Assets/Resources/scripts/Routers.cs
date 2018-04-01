@@ -7,7 +7,7 @@ abstract public class BaseRouter {
     public Collider targetCollider;
     public int targetPointIndex = 1;
     public bool inPlace = false;
-    protected const float MIN_DISTANCE = 2f;
+    protected float MIN_DISTANCE = 10f;
     abstract public void ApplyMovement(Transform transform, float deltaTime, float speed);
     abstract public void SetPosition(Transform transform, Vector3 position);
 

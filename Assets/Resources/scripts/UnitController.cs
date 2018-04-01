@@ -25,7 +25,7 @@ public class UnitController : MonoBehaviour {
             return;
         if (health <= 0) {
             gameObject.GetComponent<Animator>().SetBool("Death", true);
-            CurrentTowerDefenceState.GetInstance().ChangeBalance(100);
+            CurrentTowerDefenceState.GetInstance().ChangeBalance(10);
             Destroy(gameObject, 4);
             disabled = true;
             return;

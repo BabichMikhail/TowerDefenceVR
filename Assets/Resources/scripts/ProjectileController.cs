@@ -5,7 +5,7 @@ public class ProjectileController : MonoBehaviour {
     public float speed;
     public float damageRadius;
 
-    const float g = 9.81f / 5;
+    const float g = 9.81f / 2;
 
     private Vector3 initialPoint;
     private Vector3 destinationPoint;
