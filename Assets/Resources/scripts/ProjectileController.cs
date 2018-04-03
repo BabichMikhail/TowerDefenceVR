@@ -53,7 +53,6 @@ public class ProjectileController : MonoBehaviour {
             float speedY = speedVector.y - g*Time.deltaTime;
             movement = new Vector3(speedVector.x, (speedY + speedVector.y) / 2, speedVector.z) * Time.deltaTime;
             speedVector.y = speedY;
-            Debug.Log(speedVector);
         } else {
             Debug.Assert(false); 
         }

@@ -60,9 +60,10 @@ class SampleRouter : BaseRouter
 
     private Vector3 GetMovement(Transform transform)
     {
-        Debug.Assert(targetPointIndex < points.Count);
+        if (targetPointIndex >= points.Count)
+            return new Vector3(0, 0, 0);
         var position = transform.position;
-        if (targetPointIndex >= points.Count - 1)
+        if (targetPointIndex == points.Count - 1)
             return NormalizeState(position, GetLastTargetPoint() - position);
         float distance1 = 100 * (points[targetPointIndex] - position).sqrMagnitude;
         float distance2 = (points[targetPointIndex + 1] - position).sqrMagnitude;
@@ -79,6 +80,62 @@ class SampleRouter : BaseRouter
     protected override BaseRouter CreateInstance()
     {
         return new SampleRouter();
+    }
+}
+
+// TODO copypaste
+class MixedRouter : BaseRouter
+{
+    bool agentEnabled = false;
+    bool initialized = false;
+
+    public override void SetPosition(Transform transform, Vector3 position)
+    {
+        transform.position = position;
+    }
+
+    private Vector3 GetMovement(Transform transform)
+    {
+        Debug.Log(targetPointIndex + " " + points.Count);
+        if (targetPointIndex >= points.Count)
+            return new Vector3(0, 0, 0);
+        var position = transform.position;
+
+        if (targetPointIndex >= points.Count - 2 && !agentEnabled) {
+            if (targetPointIndex == points.Count - 1) {
+                Debug.Log("Enable agent");
+                transform.gameObject.GetComponent<NavMeshAgent>().enabled = true;
+                agentEnabled = true;
+            }
+            return NormalizeState(position, points[targetPointIndex] - position);
+        }
+
+        float distance1 = 100 * (points[targetPointIndex] - position).sqrMagnitude;
+        float distance2 = (points[targetPointIndex + 1] - position).sqrMagnitude;
+        float weight1 = distance1 / (distance1 + distance2);
+        float weight2 = 1 - weight1;
+        return NormalizeState(position, (points[targetPointIndex] - position) * weight1 + (points[targetPointIndex + 1] - position) * weight2);
+    }
+
+    public override void ApplyMovement(Transform transform, float deltaTime, float speed)
+    {
+        if (agentEnabled) {
+            var currentTargetPointIndex = targetPointIndex;
+            NormalizeState(transform.position, (transform.position - GetLastTargetPoint()));
+            transform.gameObject.GetComponent<NavMeshAgent>().enabled = true;
+            if (!initialized || targetPointIndex < points.Count && targetPointIndex != currentTargetPointIndex) {
+                var agent = transform.gameObject.GetComponent<NavMeshAgent>();
+                agent.speed = speed;
+                agent.SetDestination(points[targetPointIndex]);
+                initialized = true;
+            }
+        } else
+            transform.Translate(Time.deltaTime * GetMovement(transform) * speed);
+    }
+
+    protected override BaseRouter CreateInstance()
+    {
+        return new MixedRouter();
     }
 }
 

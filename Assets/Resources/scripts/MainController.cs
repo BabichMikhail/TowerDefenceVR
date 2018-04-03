@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class MyIntTuple {
     public int first;
@@ -11,8 +10,8 @@ public class MyIntTuple {
 }
 
 public class MainController : MonoBehaviour {
-    private List<BaseRouter> routers = new List<BaseRouter>();
-    public GameObject[] units;
+    private List<RouterController> routerControllers = new List<RouterController>();
+
     public GameObject mainTower;
     public GameObject[] towers0;
     public GameObject[] towers1;
@@ -22,7 +21,9 @@ public class MainController : MonoBehaviour {
         Container.GetInstance().AddTowers(towers0);
         Container.GetInstance().AddTowers(towers1);
         CurrentTowerDefenceState.GetInstance().SetWorldScale(gameObject.transform.localScale);
-        GameObject.FindGameObjectWithTag("MissingColliders").SetActive(false);
+        var missingCollidersObject = GameObject.FindGameObjectWithTag("MissingColliders");
+        if (missingCollidersObject != null)
+            missingCollidersObject.SetActive(false);
     }
 
     private void Start()
@@ -32,13 +33,15 @@ public class MainController : MonoBehaviour {
         Debug.Assert(collider != null);
         for (var i = 0; i < routeContainer.transform.childCount; ++i) {
             var routerObject = routeContainer.transform.GetChild(i);
-            var router = new NavMeshAgentRouter();
+            var routerController = routerObject.GetComponent<RouterController>();
+            var router = routerController.GetEmptyRouter();
             router.points = new List<Vector3>();
             for (int j = 0; j < routerObject.transform.childCount; ++j)
                 router.points.Add(routerObject.transform.GetChild(j).transform.position);
             router.points.Add(mainTower.transform.position);
             router.targetCollider = collider;
-            routers.Add(router);
+            routerController.SetRouter(router);
+            routerControllers.Add(routerController);
         }
         for (int i = 0; i < routeContainer.transform.childCount; ++i)
             routeContainer.transform.GetChild(i).gameObject.SetActive(false);
@@ -58,6 +61,7 @@ public class MainController : MonoBehaviour {
     private List<MyIntTuple> sendUnits = new List<MyIntTuple>() {
         new MyIntTuple(3000, 5, 0),
         new MyIntTuple(3000, 1, 1),
+        new MyIntTuple(4000, 1, 2),
         new MyIntTuple(40000, 2, 0),
         new MyIntTuple(43000, 3, 1),
         new MyIntTuple(80000, 5, 0),
@@ -82,11 +86,13 @@ public class MainController : MonoBehaviour {
 
     private void SendUnit(int respawnIndex)
     {
+        var routerController = routerControllers[respawnIndex];
+        var router = routerController.GetRouter().CopyInstance();
+        var units = routerController.units;
         var unit = Instantiate(units[Random.Range(0, units.Length)], Container.GetInstance().GetUnitContainer().transform);
-        var router = routers[respawnIndex];
-        unit.GetComponent<UnitController>().SetUp(router.CopyInstance(), mainTower);
+        unit.GetComponent<UnitController>().SetUp(router, mainTower);
         router.SetPosition(unit.transform, router.GetInitialPoint());
-        unit.GetComponent<NavMeshAgent>().enabled = true;
+        routerController.EnableUnit(unit);
     }
 
     public void createOrUpdateTower()

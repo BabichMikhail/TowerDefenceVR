@@ -24,7 +24,7 @@ public class UnitController : MonoBehaviour {
         if (disabled)
             return;
         if (health <= 0) {
-            gameObject.GetComponent<Animator>().SetBool("Death", true);
+            Animation.TryAnimate(gameObject, "Death");
             CurrentTowerDefenceState.GetInstance().ChangeBalance(10);
             Destroy(gameObject, 4);
             disabled = true;
@@ -41,9 +41,9 @@ public class UnitController : MonoBehaviour {
 
     private void ShootAtTower()
     {
-        gameObject.transform.LookAt(targetTower.transform);
+        gameObject.transform.LookAt(targetTower.transform); // TODO without look at or look at in 2D
         if (!hitted) {
-            gameObject.GetComponent<Animator>().SetBool("Hit", true);
+            Animation.TryAnimate(gameObject, "Hit");
             hitted = true;
         }
         var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
