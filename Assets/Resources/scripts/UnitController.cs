@@ -5,7 +5,11 @@ public class UnitController : MonoBehaviour {
     public int fireInterval;
     public float attackRadius;
     public int damage;
+    public int type;
     public GameObject projectilePrefab;
+
+    public const int UNIT_TYPE_FLYING = 0;
+    public const int UNIT_TYPE_PEDESTRIAN = 1;
 
     private BaseRouter router;
     private GameObject targetTower;

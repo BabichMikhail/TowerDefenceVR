@@ -159,3 +159,4 @@ MonoBehaviour:
   firePoint: {x: 0.1469, y: 13.52, z: 0.0021}
   projectilePrefab: {fileID: 1454275863632936, guid: 70dcfc518cef4134daea52dafdb4ade3,
     type: 2}
+  unitTypesForAttack: 0000000001000000

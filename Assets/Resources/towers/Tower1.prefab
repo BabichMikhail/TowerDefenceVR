@@ -307,6 +307,7 @@ MonoBehaviour:
   firePoint: {x: -0.8051, y: 18.06, z: 0.0762}
   projectilePrefab: {fileID: 1382056256112486, guid: d5af9ca0c36e5434f9eb0793b4a79f8a,
     type: 2}
+  unitTypesForAttack: 01000000
 --- !u!114 &114296084922577394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -319,6 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  randomRotationSpeed: 0
 --- !u!114 &114386045486858436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -331,3 +333,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  randomRotationSpeed: 0

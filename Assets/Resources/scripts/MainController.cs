@@ -64,6 +64,7 @@ public class MainController : MonoBehaviour {
         new MyIntTuple(4000, 1, 2),
         new MyIntTuple(40000, 2, 0),
         new MyIntTuple(43000, 3, 1),
+        new MyIntTuple(43000, 4, 2),
         new MyIntTuple(80000, 5, 0),
         new MyIntTuple(85000, 5, 1),
         new MyIntTuple(120000, 8, 0),

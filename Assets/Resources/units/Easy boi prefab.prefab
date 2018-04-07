@@ -1138,6 +1138,7 @@ MonoBehaviour:
   fireInterval: 1000
   attackRadius: 4
   damage: 10
+  type: 1
   projectilePrefab: {fileID: 1104539841296008, guid: 705c64e19d8da5447a56efee866b2900,
     type: 2}
 --- !u!137 &137094131468012048

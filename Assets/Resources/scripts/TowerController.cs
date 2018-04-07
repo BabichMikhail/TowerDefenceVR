@@ -8,6 +8,7 @@ public class TowerController : MonoBehaviour
     public float radius = 20f;
     public Vector3 firePoint = new Vector3(0, 0, 0);
     public GameObject projectilePrefab;
+    public int[] unitTypesForAttack;
 
     private int lastShotTime = -100000;
 
@@ -18,13 +19,16 @@ public class TowerController : MonoBehaviour
 
     private void Update()
     {
+        Dictionary<int, bool> typesSet = new Dictionary<int, bool>();
+        for (int i = 0; i < unitTypesForAttack.Length; ++i)
+            typesSet[unitTypesForAttack[i]] = true;
         if (lastShotTime + fireInterval < Time.time * 1000) {
             var availableUnits = new List<Transform>();
             var unitContainer = Container.GetInstance().GetUnitContainer();
             var shootAtCenterPoint = transform.parent.GetComponent<TowerPositionController>().GetShootAtCenterPoint();
             for (int i = 0; i < unitContainer.transform.childCount; ++i) {
                 var child = unitContainer.transform.GetChild(i);
-                if ((child.transform.position - shootAtCenterPoint).magnitude <= radius)
+                if ((child.transform.position - shootAtCenterPoint).magnitude <= radius && typesSet.ContainsKey(child.gameObject.GetComponent<UnitController>().type))
                     availableUnits.Add(child);
             }
 
