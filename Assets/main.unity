@@ -1794,7 +1794,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5c334aa18eb3c2e448f2d115ccf35201, type: 3}
       propertyPath: m_RootOrder
-      value: 32
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5c334aa18eb3c2e448f2d115ccf35201, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2709,7 +2709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &480129070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3509,7 +3509,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d0e9a2850c2d4da41b7b214f5c6db247, type: 3}
       propertyPath: m_RootOrder
-      value: 34
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: d0e9a2850c2d4da41b7b214f5c6db247, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -4829,7 +4829,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a26c09e2e3a87cb42953ccfc1c33f9eb, type: 3}
       propertyPath: m_RootOrder
-      value: 35
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 2300018, guid: a26c09e2e3a87cb42953ccfc1c33f9eb, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -6536,7 +6536,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: c82abd78e47d1a24ebac4e12f2100c35, type: 3}
+  - {fileID: 2100000, guid: a179cd8bbfd0d764a8d113c350d18267, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8411,7 +8411,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1568964549
 AudioListener:
   m_ObjectHideFlags: 0
@@ -11671,7 +11671,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6e1388320150e0c4596842ca2f957fa6, type: 3}
       propertyPath: m_RootOrder
-      value: 33
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 6e1388320150e0c4596842ca2f957fa6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -12516,7 +12516,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b8632c905bebd4147abf8882bfd097d3, type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b8632c905bebd4147abf8882bfd097d3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
