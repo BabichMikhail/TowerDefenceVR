@@ -7,6 +7,7 @@ public class UnitController : MonoBehaviour {
     public int damage;
     public int type;
     public GameObject projectilePrefab;
+    public bool fallenAfterDeath;
 
     public const int UNIT_TYPE_FLYING = 0;
     public const int UNIT_TYPE_PEDESTRIAN = 1;
@@ -27,8 +28,13 @@ public class UnitController : MonoBehaviour {
     {
         if (disabled)
             return;
+        // TODO remove mixed router
         if (health <= 0) {
+            router.Stop(transform);
             Animation.TryAnimate(gameObject, "Death");
+            Animation.TryAnimate(gameObject, "AfterDeath");
+            if (fallenAfterDeath)
+                transform.localPosition = transform.localPosition - new Vector3(0, -0.1f, 0);
             CurrentTowerDefenceState.GetInstance().ChangeBalance(10);
             Destroy(gameObject, 4);
             disabled = true;
