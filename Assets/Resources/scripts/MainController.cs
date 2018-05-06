@@ -11,6 +11,7 @@ public class MyIntTuple {
 
 public class MainController : MonoBehaviour {
     private List<RouterController> routerControllers = new List<RouterController>();
+    private float startedAt;
 
     public GameObject mainTower;
     public GameObject[] towers0;
@@ -28,6 +29,8 @@ public class MainController : MonoBehaviour {
 
     private void Start()
     {
+        startedAt = Time.time;
+
         var routeContainer = Container.GetInstance().GetRouteContainer();
         var collider = mainTower.GetComponentInChildren<Collider>();
         Debug.Assert(collider != null);
@@ -75,7 +78,7 @@ public class MainController : MonoBehaviour {
 
     public void TryToSendUnit()
     {
-        int now = (int)(Time.time * 1000);
+        int now = (int)((Time.time - startedAt) * 1000);
         if (lastSendUnitTime + SEND_UNIT_INTERVAL < now && sendUnitsIndex < sendUnits.Count && sendUnits[sendUnitsIndex].first <= now) {
             SendUnit(sendUnits[sendUnitsIndex].third);
             --sendUnits[sendUnitsIndex].second;
