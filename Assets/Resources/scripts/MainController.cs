@@ -30,6 +30,7 @@ public class MainController : MonoBehaviour {
     private void Start()
     {
         startedAt = Time.time;
+        Time.timeScale = 1.0f;
 
         var routeContainer = Container.GetInstance().GetRouteContainer();
         var collider = mainTower.GetComponentInChildren<Collider>();
