@@ -45,22 +45,24 @@ class Music {
         }   
     }
 
-    public static void Update()
+    public static void Update(bool force = false)
     {
         instance = GetInstance();
-        if (playing && (instance.audio == null || instance.audio.isPlaying))
+        if ((playing || force) && (instance.audio == null || instance.audio.isPlaying))
             instance.PlayGlobalMusic(GameObject.FindGameObjectWithTag("MainCamera"));
     }
 
     public bool SwitchSound(RawImage line)
     {
+        if (audio == null)
+            Update(true);
         Debug.Assert(audio != null);
         if (audio.isPlaying)
             StopGlobalMusic();
         else
             PlayGlobalMusic(null);
-        line.enabled = !audio.isPlaying;
         playing = audio.isPlaying;
+        line.enabled = !playing;
         return audio.isPlaying;
     }
 
