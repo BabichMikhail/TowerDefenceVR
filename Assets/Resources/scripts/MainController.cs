@@ -12,6 +12,11 @@ public class MyIntTuple {
 public class MainController : MonoBehaviour {
     private List<RouterController> routerControllers = new List<RouterController>();
     private float startedAt;
+    private float lastIncreaseMoneyTime;
+    private int sendUnitsIndex = 0;
+    private int lastSendUnitTime = -1000;
+    private const int SEND_UNIT_INTERVAL = 200;
+    private const float ADD_MONEY_INTERVAL = 0.666f / 2.0f;
 
     public GameObject mainTower;
     public GameObject[] towers0;
@@ -29,7 +34,7 @@ public class MainController : MonoBehaviour {
 
     private void Start()
     {
-        startedAt = Time.time;
+        lastIncreaseMoneyTime = startedAt = Time.time;
         Time.timeScale = 1.0f;
 
         var routeContainer = Container.GetInstance().GetRouteContainer();
@@ -51,29 +56,33 @@ public class MainController : MonoBehaviour {
             routeContainer.transform.GetChild(i).gameObject.SetActive(false);
     }
 
+
     private void Update()
     {
         Music.Update();
         TryToSendUnit();
+        var balanceDelta = 0;
+        while (Time.time - lastIncreaseMoneyTime > ADD_MONEY_INTERVAL) {
+            ++balanceDelta;
+            lastIncreaseMoneyTime += ADD_MONEY_INTERVAL;
+        }
+        CurrentTowerDefenceState.GetInstance().ChangeBalance(balanceDelta);
     }
-
-    private int sendUnitsIndex = 0;
-    private int lastSendUnitTime = -1000;
-    private const int SEND_UNIT_INTERVAL = 200;
 
     // time in milliseconds, unit count, respawn index
     private List<MyIntTuple> sendUnits = new List<MyIntTuple>() {
         new MyIntTuple(3000, 2, 0),
-        new MyIntTuple(3000, 1, 1),
-        new MyIntTuple(4000, 1, 2),
-        new MyIntTuple(30000, 2, 2),
+        new MyIntTuple(23000, 1, 1),
+        new MyIntTuple(24000, 1, 2),
+        new MyIntTuple(30000, 1, 2),
         new MyIntTuple(40000, 2, 0),
         new MyIntTuple(43000, 3, 1),
-        new MyIntTuple(43000, 2, 2),
+        new MyIntTuple(43000, 1, 2),
         new MyIntTuple(80000, 5, 0),
         new MyIntTuple(85000, 5, 1),
         new MyIntTuple(120000, 8, 0),
         new MyIntTuple(121000, 7, 1),
+        new MyIntTuple(122000, 4, 2),
         new MyIntTuple(200000, 50, 0),
         new MyIntTuple(200000, 50, 1),
     };
