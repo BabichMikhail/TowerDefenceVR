@@ -18,6 +18,7 @@ public class UnitController : MonoBehaviour {
     private int lastShotTime = -10000;
     private bool disabled = false;
     private bool hitted = false;
+    private float deathTime;
 
     private bool canShootAtTower()
     {
@@ -26,17 +27,19 @@ public class UnitController : MonoBehaviour {
 
     public void Update()
     {
-        if (disabled)
-            return;
-        // TODO remove mixed router
-        if (health <= 0) {
-            router.Stop(transform);
-            Animation.TryAnimate(gameObject, "Death");
+        if (disabled) {
             Animation.TryAnimate(gameObject, "AfterDeath");
             if (fallenAfterDeath)
-                transform.localPosition = transform.localPosition - new Vector3(0, -0.1f, 0);
+                transform.localPosition = transform.localPosition - new Vector3(0, 0.5f, 0) * Time.deltaTime * (Time.time - deathTime);
+            return;
+        }
+
+        if (health <= 0) {
+            deathTime = Time.time;
+            router.Stop(transform);
+            Animation.TryAnimate(gameObject, "Death");
             CurrentTowerDefenceState.GetInstance().ChangeBalance(10);
-            Destroy(gameObject, 4);
+            Destroy(gameObject, 6);
             disabled = true;
             return;
         }
@@ -51,7 +54,7 @@ public class UnitController : MonoBehaviour {
 
     private void ShootAtTower()
     {
-        gameObject.transform.LookAt(targetTower.transform); // TODO without look at or look at in 2D
+        gameObject.transform.LookAt(targetTower.transform);
         if (!hitted) {
             Animation.TryAnimate(gameObject, "Hit");
             hitted = true;

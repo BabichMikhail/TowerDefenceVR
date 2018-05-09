@@ -1134,13 +1134,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd13da4947008874591340ed7a9efb0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5000
+  health: 1200
   fireInterval: 1000
   attackRadius: 4
   damage: 10
   type: 1
   projectilePrefab: {fileID: 1104539841296008, guid: 705c64e19d8da5447a56efee866b2900,
     type: 2}
+  fallenAfterDeath: 0
 --- !u!137 &137094131468012048
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1461,7 +1462,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1138588615652540}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 3.5
   m_Speed: 100
   m_Acceleration: 8
   avoidancePriority: 50
