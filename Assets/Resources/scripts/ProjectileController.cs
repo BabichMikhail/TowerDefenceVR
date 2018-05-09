@@ -16,6 +16,13 @@ public class ProjectileController : MonoBehaviour {
     public enum TargetType { TOWER, UNIT }
     private TargetType targetType;
 
+    private void Awake()
+    {
+        var audioSource = gameObject.GetComponent<AudioSource>();
+        if (audioSource != null) // Settings for specific sound
+            audioSource.time = 5.6f;
+    }
+
     private void Start()
     {
         if (approximationDegree == 2) {
