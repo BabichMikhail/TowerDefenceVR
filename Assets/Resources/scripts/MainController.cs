@@ -71,6 +71,7 @@ public class MainController : MonoBehaviour {
 
     // time in milliseconds, unit count, respawn index
     private List<MyIntTuple> sendUnits = new List<MyIntTuple>() {
+        new MyIntTuple(1, 1, 2),
         new MyIntTuple(3000, 2, 0),
         new MyIntTuple(23000, 1, 1),
         new MyIntTuple(24000, 1, 2),

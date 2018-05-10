@@ -1282,7 +1282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 800
-  fireInterval: 1000
+  fireInterval: 1208
   attackRadius: 4
   damage: 100
   type: 0

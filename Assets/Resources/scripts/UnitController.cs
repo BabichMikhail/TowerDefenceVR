@@ -54,7 +54,6 @@ public class UnitController : MonoBehaviour {
 
     private void ShootAtTower()
     {
-        gameObject.transform.LookAt(targetTower.transform);
         if (!hitted) {
             Animation.TryAnimate(gameObject, "Hit");
             hitted = true;
