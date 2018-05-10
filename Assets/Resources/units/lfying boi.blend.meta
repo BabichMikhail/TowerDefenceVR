@@ -1,0 +1,172 @@
+fileFormatVersion: 2
+guid: a660437ffa3921c42b4a8f542aa95ac9
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Armature
+    100002: Body
+    100004: Body_0
+    100006: Face
+    100008: Jaw
+    100010: Jaw_0
+    100012: Left_bottom_arm
+    100014: Left_bottom_arm_target
+    100016: Left_bottom_hand
+    100018: Left_bottom_shoulder
+    100020: Left_top_arm
+    100022: Left_top_arm_target
+    100024: Left_top_hand
+    100026: Left_top_shoulder
+    100028: //RootNode
+    100030: Right_bottom_arm
+    100032: Right_bottom_arm_target
+    100034: Right_bottom_hand
+    100036: Right_bottom_shoulder
+    100038: Right_top_arm
+    100040: Right_top_arm_target
+    100042: Right_top_hand
+    100044: Right_top_shoulder
+    100046: Right_upper_arm
+    100048: Right_upper_arm_001
+    100050: Right_upper_arm_002
+    100052: Right_upper_arm_003
+    100054: Right_upper_arm_004
+    100056: Tubes
+    400000: Armature
+    400002: Body
+    400004: Body_0
+    400006: Face
+    400008: Jaw
+    400010: Jaw_0
+    400012: Left_bottom_arm
+    400014: Left_bottom_arm_target
+    400016: Left_bottom_hand
+    400018: Left_bottom_shoulder
+    400020: Left_top_arm
+    400022: Left_top_arm_target
+    400024: Left_top_hand
+    400026: Left_top_shoulder
+    400028: //RootNode
+    400030: Right_bottom_arm
+    400032: Right_bottom_arm_target
+    400034: Right_bottom_hand
+    400036: Right_bottom_shoulder
+    400038: Right_top_arm
+    400040: Right_top_arm_target
+    400042: Right_top_hand
+    400044: Right_top_shoulder
+    400046: Right_upper_arm
+    400048: Right_upper_arm_001
+    400050: Right_upper_arm_002
+    400052: Right_upper_arm_003
+    400054: Right_upper_arm_004
+    400056: Tubes
+    2100000: unnamed
+    2300000: Right_upper_arm_004
+    3300000: Right_upper_arm_004
+    4300000: Right_upper_arm_003
+    4300002: Right_upper_arm_002
+    4300004: Body
+    4300006: Right_upper_arm
+    4300008: Tubes
+    4300010: Right_upper_arm_001
+    4300012: Face
+    4300014: Jaw
+    4300016: Right_upper_arm_004
+    7400000: Default Take
+    7400002: Dead1
+    7400004: Dead2_001
+    7400006: Walk
+    7400008: Dead2
+    7400010: Hit
+    9500000: //RootNode
+    13700000: Body
+    13700002: Face
+    13700004: Jaw
+    13700006: Right_upper_arm
+    13700008: Right_upper_arm_001
+    13700010: Right_upper_arm_002
+    13700012: Right_upper_arm_003
+    13700014: Tubes
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
