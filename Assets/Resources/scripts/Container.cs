@@ -7,7 +7,6 @@ public class Container {
     private static GameObject routeContainer;
     private static GameObject towerContainer;
     private static Canvas createTowerCanvas;
-    private static Canvas updateTowerCanvas;
     private static List<GameObject[]> towers = new List<GameObject[]>();
 
     private static Container instance;
@@ -53,11 +52,5 @@ public class Container {
         if (createTowerCanvas == null)
             createTowerCanvas = GameObject.FindGameObjectWithTag("CreateTowerCanvas").GetComponent<Canvas>();
         return createTowerCanvas;
-    }
-    public Canvas GetUpdateTowerCanvas()
-    {
-        if (updateTowerCanvas == null)
-            updateTowerCanvas = GameObject.FindGameObjectWithTag("UpdateTowerCanvas").GetComponent<Canvas>();
-        return updateTowerCanvas;
     }
 }
