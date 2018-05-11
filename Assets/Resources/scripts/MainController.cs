@@ -1,14 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class MyIntTuple {
-    public int first;
-    public int second;
-    public int third;
-
-    public MyIntTuple(int first, int second, int third) { this.first = first; this.second = second; this.third = third; }
-}
-
 public class MainController : MonoBehaviour {
     public GameObject mainTower;
     public GameObject[] towers0;
@@ -17,35 +9,13 @@ public class MainController : MonoBehaviour {
     private List<RouterController> routerControllers = new List<RouterController>();
     private float startedAt;
     private float lastIncreaseMoneyTime;
-    private int sendUnitsIndex = 0;
+    private int unitWaveIndex = 0;
     private int lastSendUnitTime = -1000;
-    private const int SEND_UNIT_INTERVAL = 200;
-    private const float ADD_MONEY_INTERVAL = 0.333f;
-
-    // time in milliseconds, unit count, respawn index
-    private List<MyIntTuple> sendUnits = new List<MyIntTuple>() {
-        new MyIntTuple(1, 1, 2),
-        new MyIntTuple(3000, 2, 0),
-        new MyIntTuple(23000, 1, 1),
-        new MyIntTuple(24000, 1, 2),
-        new MyIntTuple(30000, 1, 2),
-        new MyIntTuple(40000, 2, 0),
-        new MyIntTuple(43000, 3, 1),
-        new MyIntTuple(43000, 1, 2),
-        new MyIntTuple(80000, 5, 0),
-        new MyIntTuple(85000, 5, 1),
-        new MyIntTuple(120000, 8, 0),
-        new MyIntTuple(121000, 7, 1),
-        new MyIntTuple(122000, 4, 2),
-        new MyIntTuple(200000, 50, 0),
-        new MyIntTuple(200000, 50, 1),
-    };
 
     private void Awake()
     {
         Container.GetInstance().AddTowers(towers0);
         Container.GetInstance().AddTowers(towers1);
-        CurrentTowerDefenceState.GetInstance().SetWorldScale(gameObject.transform.localScale);
         var missingCollidersObject = GameObject.FindGameObjectWithTag("MissingColliders");
         if (missingCollidersObject != null)
             missingCollidersObject.SetActive(false);
@@ -81,22 +51,23 @@ public class MainController : MonoBehaviour {
         Music.Update();
         TryToSendUnit();
         var balanceDelta = 0;
-        while (Time.time - lastIncreaseMoneyTime > ADD_MONEY_INTERVAL) {
+        while (Time.time - lastIncreaseMoneyTime > Config.ADD_MONEY_INTERVAL) {
             ++balanceDelta;
-            lastIncreaseMoneyTime += ADD_MONEY_INTERVAL;
+            lastIncreaseMoneyTime += Config.ADD_MONEY_INTERVAL;
         }
         CurrentTowerDefenceState.GetInstance().ChangeBalance(balanceDelta);
     }
 
+
     public void TryToSendUnit()
     {
         int now = (int)((Time.time - startedAt) * 1000);
-        if (lastSendUnitTime + SEND_UNIT_INTERVAL < now && sendUnitsIndex < sendUnits.Count && sendUnits[sendUnitsIndex].first <= now) {
-            SendUnit(sendUnits[sendUnitsIndex].third);
-            --sendUnits[sendUnitsIndex].second;
-            if (sendUnits[sendUnitsIndex].second == 0)
-                ++sendUnitsIndex;
-            lastSendUnitTime = now - Random.Range(0, SEND_UNIT_INTERVAL / 3);
+        if (lastSendUnitTime + Config.SEND_UNIT_INTERVAL < now && unitWaveIndex < Config.UNIT_WAVES.Count && Config.UNIT_WAVES[unitWaveIndex].first <= now) {
+            SendUnit(Config.UNIT_WAVES[unitWaveIndex].third);
+            --Config.UNIT_WAVES[unitWaveIndex].second;
+            if (Config.UNIT_WAVES[unitWaveIndex].second == 0)
+                ++unitWaveIndex;
+            lastSendUnitTime = now - Random.Range(0, Config.SEND_UNIT_INTERVAL / 3);
         }
     }
 
@@ -114,7 +85,7 @@ public class MainController : MonoBehaviour {
     public void CreateOrUpdateTower()
     {
         var state = CurrentTowerDefenceState.GetInstance();
-        Debug.Assert(state.GetBalance() >= CurrentTowerDefenceState.createTowerCost);
+        Debug.Assert(state.GetBalance() >= Config.CONSTRUCT_TOWER_COST);
         var controller = state.GetCurrentTower().GetComponent<TowerPositionController>();
         state.CreateNextTower(controller);
     }

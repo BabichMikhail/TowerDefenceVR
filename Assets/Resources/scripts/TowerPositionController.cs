@@ -22,7 +22,7 @@ public class TowerPositionController : MonoBehaviour {
         if (disabled || !CurrentTowerDefenceState.GetInstance().CanCreateTower() || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             return;
         var state = CurrentTowerDefenceState.GetInstance();
-        var enabled = state.GetCanvasEnabled();
+        var enabled = state.GetCurrentCanvas().enabled;
         if (enabled && !state.TowerIsCurrent(gameObject))
             enabled = false;
 

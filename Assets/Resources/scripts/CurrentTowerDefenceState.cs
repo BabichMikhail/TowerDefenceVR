@@ -2,20 +2,16 @@
 using UnityEngine;
 
 public class CurrentTowerDefenceState {
-    private const int DEFAULT_BALANCE = 500;
-
     private static CurrentTowerDefenceState instance;
-    private Vector3 worldScale = new Vector3(1.0f, 1.0f, 1.0f);
     private GameObject currentTower;
     private Dictionary<string, TowerController> createdTowers = new Dictionary<string, TowerController>();
-    private int balance = DEFAULT_BALANCE;
+    private int balance = Config.START_BALANCE;
+
 
     public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
 
     private CurrentTowerDefenceState() {}
     public static void Reset() { instance = null; }
-    private Canvas GetCreateTowerCanvas() { return Container.GetInstance().GetCreateTowerCanvas(); }
-    private Canvas GetUpdateTowerCanvas() { return Container.GetInstance().GetUpdateTowerCanvas(); }
 
     public static CurrentTowerDefenceState GetInstance()
     {
@@ -24,24 +20,9 @@ public class CurrentTowerDefenceState {
         return instance;
     }
 
-    public void SetWorldScale(Vector3 scale) { worldScale = scale; }
-    public Vector3 GetWorldScale() { return worldScale; }
-
-    public bool GetCanvasEnabled()
-    {
-        return
-            GetCreateTowerCanvas().enabled ||
-            GetUpdateTowerCanvas().enabled;
-    }
-
     public bool TowerIsCurrent(GameObject tower)
     {
         return currentTower != null && currentTower.name == tower.name;
-    }
-
-    public bool TowerExists()
-    {
-        return currentTower != null && createdTowers.ContainsKey(currentTower.name);
     }
 
     public void SetCurrentTower(GameObject tower)
@@ -60,13 +41,12 @@ public class CurrentTowerDefenceState {
 
     public Canvas GetCurrentCanvas()
     {
-        return TowerExists() ? GetUpdateTowerCanvas() : GetCreateTowerCanvas();
+        return Container.GetInstance().GetCreateTowerCanvas();
     }
 
     public void ResetTower()
     {
-        GetCreateTowerCanvas().enabled = false;
-        GetUpdateTowerCanvas().enabled = false;
+        GetCurrentCanvas().enabled = false;
         SetCurrentTower(null);
     }
 
@@ -101,10 +81,8 @@ public class CurrentTowerDefenceState {
 
     public bool CanCreateTower()
     {
-        return createTowerCost <= balance;
+        return Config.CONSTRUCT_TOWER_COST <= balance;
     }
-
-    public const int createTowerCost = 100;
 
     public void CreateNextTower(TowerPositionController controller)
     {
@@ -116,14 +94,14 @@ public class CurrentTowerDefenceState {
         if (!CanCreateNextTower(controller.GetCurrentTowerToCreateIndex(), controller.type))
             controller.DisableInitialComponents();
         ResetTower();
-        ChangeBalance(-createTowerCost);
+        ChangeBalance(-Config.CONSTRUCT_TOWER_COST);
         UpdateTowerPositionMaterials();
     }
 
     public void UpdateTowerPositionMaterials()
     {
         var material = Resources.Load<Material>("materials/DarkRedMaterial");
-        if (balance >= createTowerCost)
+        if (balance >= Config.CONSTRUCT_TOWER_COST)
             material = currentTower == null ? Resources.Load<Material>("materials/Location/Teapot Tower Material") : Resources.Load<Material>("materials/Location/Gear");
 
         GameObject[] objects = GameObject.FindGameObjectsWithTag("TowerPositionChild");

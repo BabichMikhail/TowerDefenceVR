@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class MainTowerController : MonoBehaviour {
-    public int health = 10000;
+    public int health = Config.MAIN_TOWER_HEALTH;
     public GameObject defeatMenu;
     public GameObject gameMenu;
 
