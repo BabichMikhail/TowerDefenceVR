@@ -10,17 +10,36 @@ public class MyIntTuple {
 }
 
 public class MainController : MonoBehaviour {
+    public GameObject mainTower;
+    public GameObject[] towers0;
+    public GameObject[] towers1;
+
     private List<RouterController> routerControllers = new List<RouterController>();
     private float startedAt;
     private float lastIncreaseMoneyTime;
     private int sendUnitsIndex = 0;
     private int lastSendUnitTime = -1000;
     private const int SEND_UNIT_INTERVAL = 200;
-    private const float ADD_MONEY_INTERVAL = 0.666f / 2.0f;
+    private const float ADD_MONEY_INTERVAL = 0.333f;
 
-    public GameObject mainTower;
-    public GameObject[] towers0;
-    public GameObject[] towers1;
+    // time in milliseconds, unit count, respawn index
+    private List<MyIntTuple> sendUnits = new List<MyIntTuple>() {
+        new MyIntTuple(1, 1, 2),
+        new MyIntTuple(3000, 2, 0),
+        new MyIntTuple(23000, 1, 1),
+        new MyIntTuple(24000, 1, 2),
+        new MyIntTuple(30000, 1, 2),
+        new MyIntTuple(40000, 2, 0),
+        new MyIntTuple(43000, 3, 1),
+        new MyIntTuple(43000, 1, 2),
+        new MyIntTuple(80000, 5, 0),
+        new MyIntTuple(85000, 5, 1),
+        new MyIntTuple(120000, 8, 0),
+        new MyIntTuple(121000, 7, 1),
+        new MyIntTuple(122000, 4, 2),
+        new MyIntTuple(200000, 50, 0),
+        new MyIntTuple(200000, 50, 1),
+    };
 
     private void Awake()
     {
@@ -69,25 +88,6 @@ public class MainController : MonoBehaviour {
         CurrentTowerDefenceState.GetInstance().ChangeBalance(balanceDelta);
     }
 
-    // time in milliseconds, unit count, respawn index
-    private List<MyIntTuple> sendUnits = new List<MyIntTuple>() {
-        new MyIntTuple(1, 1, 2),
-        new MyIntTuple(3000, 2, 0),
-        new MyIntTuple(23000, 1, 1),
-        new MyIntTuple(24000, 1, 2),
-        new MyIntTuple(30000, 1, 2),
-        new MyIntTuple(40000, 2, 0),
-        new MyIntTuple(43000, 3, 1),
-        new MyIntTuple(43000, 1, 2),
-        new MyIntTuple(80000, 5, 0),
-        new MyIntTuple(85000, 5, 1),
-        new MyIntTuple(120000, 8, 0),
-        new MyIntTuple(121000, 7, 1),
-        new MyIntTuple(122000, 4, 2),
-        new MyIntTuple(200000, 50, 0),
-        new MyIntTuple(200000, 50, 1),
-    };
-
     public void TryToSendUnit()
     {
         int now = (int)((Time.time - startedAt) * 1000);
@@ -111,7 +111,7 @@ public class MainController : MonoBehaviour {
         routerController.EnableUnit(unit);
     }
 
-    public void createOrUpdateTower()
+    public void CreateOrUpdateTower()
     {
         var state = CurrentTowerDefenceState.GetInstance();
         Debug.Assert(state.GetBalance() >= CurrentTowerDefenceState.createTowerCost);
@@ -119,7 +119,7 @@ public class MainController : MonoBehaviour {
         state.CreateNextTower(controller);
     }
 
-    public void deselectTower()
+    public void DeselectTower()
     {
         CurrentTowerDefenceState.GetInstance().ResetTower();
     }

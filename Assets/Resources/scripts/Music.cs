@@ -40,9 +40,8 @@ class Music {
         volume = audio.volume;
         time = audio.time;
         
-        if (!audio.isPlaying) {
+        if (!audio.isPlaying)
             audio.Play();
-        }   
     }
 
     public static void Update(bool force = false)

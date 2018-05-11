@@ -2,12 +2,15 @@
 using UnityEngine;
 
 public class CurrentTowerDefenceState {
+    private const int DEFAULT_BALANCE = 500;
+
     private static CurrentTowerDefenceState instance;
     private Vector3 worldScale = new Vector3(1.0f, 1.0f, 1.0f);
-    public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
-
-    private const int DEFAULT_BALANCE = 500;
+    private GameObject currentTower;
+    private Dictionary<string, TowerController> createdTowers = new Dictionary<string, TowerController>();
     private int balance = DEFAULT_BALANCE;
+
+    public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
 
     private CurrentTowerDefenceState() {}
     public static void Reset() { instance = null; }
@@ -30,9 +33,6 @@ public class CurrentTowerDefenceState {
             GetCreateTowerCanvas().enabled ||
             GetUpdateTowerCanvas().enabled;
     }
-
-    private GameObject currentTower;
-    private Dictionary<string, TowerController> createdTowers = new Dictionary<string, TowerController>();
 
     public bool TowerIsCurrent(GameObject tower)
     {
@@ -83,17 +83,6 @@ public class CurrentTowerDefenceState {
         return newTower;
     }
 
-    public void UpdateCurrentTower(UpdateTypes updateType, int value)
-    {
-        var tower = GetCurrentTower().GetComponent<TowerController>();
-        if (updateType == UpdateTypes.UPDATE_DAMAGE) {
-            tower.damage += value;
-        } else if (updateType == UpdateTypes.UPDATE_SPEED) {
-            tower.fireInterval -= value;
-        }
-        ResetTower();
-    }
-
     public int GetBalance()
     {
         return balance;
@@ -133,11 +122,11 @@ public class CurrentTowerDefenceState {
 
     public void UpdateTowerPositionMaterials()
     {
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("TowerPositionChild");
         var material = Resources.Load<Material>("materials/DarkRedMaterial");
-        if (balance >= createTowerCost) {
+        if (balance >= createTowerCost)
             material = currentTower == null ? Resources.Load<Material>("materials/Location/Teapot Tower Material") : Resources.Load<Material>("materials/Location/Gear");
-        }
+
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("TowerPositionChild");
         for (int i = 0; i < objects.Length; ++i) {
             var renderer = objects[i].GetComponent<MeshRenderer>();
             renderer.material = material;

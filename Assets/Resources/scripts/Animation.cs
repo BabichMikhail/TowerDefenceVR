@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-class Animation
-{
+class Animation {
     public static void TryAnimate(GameObject gameObject, string action)
     {
         var animator = gameObject.GetComponent<Animator>();

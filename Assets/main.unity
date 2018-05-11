@@ -3902,8 +3902,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.077932216, y: 0.052041043, z: 0.12585837}
-  m_Center: {x: -0.0052703638, y: -0.008456412, z: 0.019370997}
+  m_Size: {x: 0.0924957, y: 0.052041043, z: 0.12585838}
+  m_Center: {x: 0.0020113739, y: -0.008456408, z: 0.019371}
 --- !u!4 &607938455 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 20c18f3333473164cb8fe39527a56fda, type: 3}
@@ -5323,7 +5323,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1150578337}
-        m_MethodName: deselectTower
+        m_MethodName: DeselectTower
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9223,7 +9223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1674194214
 Transform:
   m_ObjectHideFlags: 0
@@ -9688,7 +9688,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1150578337}
-        m_MethodName: createOrUpdateTower
+        m_MethodName: CreateOrUpdateTower
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
