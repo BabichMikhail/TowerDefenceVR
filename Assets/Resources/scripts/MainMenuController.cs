@@ -46,8 +46,6 @@ public class MainMenuController : MonoBehaviour {
     {
         Time.timeScale = 0.0f;
         SceneManager.LoadScene("Main");
-        Container.Instance = null;
-        CurrentTowerDefenceState.Instance = null;
         Time.timeScale = 1.0f;
     }
 }
