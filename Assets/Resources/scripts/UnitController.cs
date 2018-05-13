@@ -8,6 +8,7 @@ public class UnitController : MonoBehaviour {
     public int type;
     public GameObject projectilePrefab;
     public bool fallenAfterDeath;
+    public Vector3 acceleration;
 
     public const int UNIT_TYPE_FLYING = 0;
     public const int UNIT_TYPE_PEDESTRIAN = 1;
@@ -19,6 +20,7 @@ public class UnitController : MonoBehaviour {
     private bool disabled = false;
     private bool hitted = false;
     private float deathTime;
+    private Vector3 deathSpeed = new Vector3(0.0f, 0.0f, 0.0f);
 
     private bool canShootAtTower()
     {
@@ -29,8 +31,10 @@ public class UnitController : MonoBehaviour {
     {
         if (disabled) {
             Animation.TryAnimate(gameObject, "AfterDeath");
-            if (fallenAfterDeath)
-                transform.localPosition = transform.localPosition - new Vector3(0, 0.5f, 0) * Time.deltaTime * (Time.time - deathTime);
+            if (fallenAfterDeath) {
+                transform.Translate(deathSpeed);
+                deathSpeed += acceleration * Time.deltaTime;
+            }
             return;
         }
 

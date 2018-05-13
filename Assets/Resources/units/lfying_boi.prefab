@@ -1289,6 +1289,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1454275863632936, guid: 70dcfc518cef4134daea52dafdb4ade3,
     type: 2}
   fallenAfterDeath: 1
+  acceleration: {x: 0, y: -0.006, z: 0}
 --- !u!137 &137297916213077230
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
