@@ -38,19 +38,6 @@ public class CurrentTowerDefenceState {
         SetSelectedTower(null);
     }
 
-    public GameObject CreateTower(GameObject towerPrefab, GameObject projectile)
-    {
-        var tower = GetSelectedTower();
-        Debug.Assert(tower != null);
-        Debug.Assert(!createdTowers.ContainsKey(tower.name));
-        var newTower = Object.Instantiate(towerPrefab, tower.transform);
-        newTower.GetComponent<TowerController>().SetProjectile(projectile);
-        newTower.transform.localPosition = new Vector3(0, 0, 0);
-        createdTowers[tower.name] = newTower.GetComponent<TowerController>();
-        ResetTower();
-        return newTower;
-    }
-
     public int GetBalance()
     {
         return balance;
