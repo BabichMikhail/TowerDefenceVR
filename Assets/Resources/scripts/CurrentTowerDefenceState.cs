@@ -2,57 +2,45 @@
 using UnityEngine;
 
 public class CurrentTowerDefenceState {
-    private static CurrentTowerDefenceState instance;
-    private GameObject currentTower;
+    private GameObject selectedTower;
     private Dictionary<string, TowerController> createdTowers = new Dictionary<string, TowerController>();
     private int balance = Config.START_BALANCE;
 
-
-    public enum UpdateTypes { UPDATE_SPEED, UPDATE_DAMAGE }
-
-    private CurrentTowerDefenceState() {}
-    public static void Reset() { instance = null; }
-
-    public static CurrentTowerDefenceState GetInstance()
-    {
-        if (instance == null)
-            instance = new CurrentTowerDefenceState();
-        return instance;
-    }
+    public static CurrentTowerDefenceState Instance { get; set; }
 
     public bool TowerIsCurrent(GameObject tower)
     {
-        return currentTower != null && currentTower.name == tower.name;
+        return selectedTower != null && selectedTower.name == tower.name;
     }
 
-    public void SetCurrentTower(GameObject tower)
+    public void SetSelectedTower(GameObject tower)
     {
-        if (currentTower != null)
-            currentTower.GetComponentInChildren<MeshRenderer>().material = Resources.Load<Material>("materials/Location/Teapot Tower Material");
-        currentTower = tower;
-        if (currentTower != null)
-            currentTower.GetComponentInChildren<MeshRenderer>().material = Resources.Load<Material>("materials/Location/Gear");
+        if (selectedTower != null)
+            selectedTower.GetComponentInChildren<MeshRenderer>().material = Resources.Load<Material>(Config.TOWER_POSITION_SELECTABLE_MODE_MATERIAL);
+        selectedTower = tower;
+        if (selectedTower != null)
+            selectedTower.GetComponentInChildren<MeshRenderer>().material = Resources.Load<Material>(Config.TOWER_POSITION_SELECTED_MODE_MATERIAL);
     }
 
-    public GameObject GetCurrentTower()
+    public GameObject GetSelectedTower()
     {
-        return currentTower;
+        return selectedTower;
     }
 
-    public Canvas GetCurrentCanvas()
+    public Canvas GetConstructionCanvas()
     {
-        return Container.GetInstance().GetCreateTowerCanvas();
+        return Container.Instance.CreateTowerCanvas;
     }
 
     public void ResetTower()
     {
-        GetCurrentCanvas().enabled = false;
-        SetCurrentTower(null);
+        GetConstructionCanvas().enabled = false;
+        SetSelectedTower(null);
     }
 
     public GameObject CreateTower(GameObject towerPrefab, GameObject projectile)
     {
-        var tower = GetCurrentTower();
+        var tower = GetSelectedTower();
         Debug.Assert(tower != null);
         Debug.Assert(!createdTowers.ContainsKey(tower.name));
         var newTower = Object.Instantiate(towerPrefab, tower.transform);
@@ -76,7 +64,7 @@ public class CurrentTowerDefenceState {
 
     public bool CanCreateNextTower(int idx, int type)
     {
-        return Container.GetInstance().GetTowers(type).Length > idx;
+        return Container.Instance.GetTowers(type).Length > idx;
     }
 
     public bool CanCreateTower()
@@ -88,8 +76,8 @@ public class CurrentTowerDefenceState {
     {
         var idx = controller.GetCurrentTowerToCreateIndex();
         Debug.Assert(CanCreateNextTower(idx, controller.type));
-        var towerPrefab = Container.GetInstance().GetTowers(controller.type)[idx];
-        Object.Instantiate(towerPrefab, GetCurrentTower().transform);
+        var towerPrefab = Container.Instance.GetTowers(controller.type)[idx];
+        Object.Instantiate(towerPrefab, GetSelectedTower().transform);
         controller.IncreaseTowerToCreateIndex();
         if (!CanCreateNextTower(controller.GetCurrentTowerToCreateIndex(), controller.type))
             controller.DisableInitialComponents();
@@ -100,11 +88,11 @@ public class CurrentTowerDefenceState {
 
     public void UpdateTowerPositionMaterials()
     {
-        var material = Resources.Load<Material>("materials/DarkRedMaterial");
+        var material = Resources.Load<Material>(Config.TOWER_POSITION_NOT_SELECTABLE_MODE_MATERIAL);
         if (balance >= Config.CONSTRUCT_TOWER_COST)
-            material = currentTower == null ? Resources.Load<Material>("materials/Location/Teapot Tower Material") : Resources.Load<Material>("materials/Location/Gear");
+            material = selectedTower == null ? Resources.Load<Material>(Config.TOWER_POSITION_SELECTABLE_MODE_MATERIAL) : Resources.Load<Material>(Config.TOWER_POSITION_SELECTED_MODE_MATERIAL);
 
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("TowerPositionChild");
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(Config.TOWER_POSITION_TAP_TAG_NAME);
         for (int i = 0; i < objects.Length; ++i) {
             var renderer = objects[i].GetComponent<MeshRenderer>();
             renderer.material = material;

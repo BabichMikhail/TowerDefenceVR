@@ -42,7 +42,7 @@ public class UnitController : MonoBehaviour {
             deathTime = Time.time;
             router.Stop(transform);
             Animation.TryAnimate(gameObject, "Death");
-            CurrentTowerDefenceState.GetInstance().ChangeBalance(10);
+            CurrentTowerDefenceState.Instance.ChangeBalance(10);
             Destroy(gameObject, 6);
             disabled = true;
             return;
@@ -62,7 +62,7 @@ public class UnitController : MonoBehaviour {
             Animation.TryAnimate(gameObject, "Hit");
             hitted = true;
         }
-        var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
+        var projectile = Instantiate(projectilePrefab, Container.Instance.ProjectileContainer.transform);
         projectile.transform.position = gameObject.transform.position; // TODO real position
         projectile.GetComponent<ProjectileController>().SetUp(projectile.transform.position, targetTower.transform.position, targetTower, damage, ProjectileController.TargetType.TOWER);
         lastShotTime = (int)(Time.time * 1000);

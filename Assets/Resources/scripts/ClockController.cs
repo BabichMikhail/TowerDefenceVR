@@ -9,7 +9,8 @@ public class ClockController : MonoBehaviour {
         initializedAt = Time.time;
     }
 
-    void Update () {
+    private void Update ()
+    {
         var startedAt = (int)(Time.time - initializedAt);
         float minutes = startedAt / 60;
         float seconds = startedAt - minutes * 60;

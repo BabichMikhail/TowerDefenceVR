@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-
 public class GearZRotator : MonoBehaviour {
     public float randomRotationSpeed;
 

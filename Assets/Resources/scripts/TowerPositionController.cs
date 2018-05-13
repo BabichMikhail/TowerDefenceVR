@@ -5,7 +5,7 @@ public class TowerPositionController : MonoBehaviour {
     public int type = 0;
     public GameObject shootAtCenterPoint;
 
-    private int towerToCreateIndex;
+    private int towerToCreateIndex = 0;
     private bool disabled = false;
 
     private List<GameObject> initialComponents = new List<GameObject>();
@@ -19,17 +19,17 @@ public class TowerPositionController : MonoBehaviour {
 
     private void OnMouseUp()
     {
-        if (disabled || !CurrentTowerDefenceState.GetInstance().CanCreateTower() || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        if (disabled || !CurrentTowerDefenceState.Instance.CanCreateTower() || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
             return;
-        var state = CurrentTowerDefenceState.GetInstance();
-        var enabled = state.GetCurrentCanvas().enabled;
+        var state = CurrentTowerDefenceState.Instance;
+        var enabled = state.GetConstructionCanvas().enabled;
         if (enabled && !state.TowerIsCurrent(gameObject))
             enabled = false;
 
         state.ResetTower();
         if (!enabled) {
-            state.SetCurrentTower(gameObject);
-            Canvas canvas = state.GetCurrentCanvas();
+            state.SetSelectedTower(gameObject);
+            Canvas canvas = state.GetConstructionCanvas();
             canvas.transform.localPosition = new Vector3(0, 0, 0);
             canvas.enabled = true;
         }

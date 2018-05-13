@@ -5,9 +5,14 @@ using UnityEngine.UI;
 public class MainMenuController : MonoBehaviour {
     public RawImage line;
 
+    public void Awake()
+    {
+        Music.Instance = new Music();
+    }
+
     public void Update()
     {
-        Music.Update();
+        Music.Instance.Update();
     }
 
     public void OnClickGame()
@@ -23,7 +28,7 @@ public class MainMenuController : MonoBehaviour {
 
     public void OnClickSound()
     {
-        Music.GetInstance().SwitchSound(line);
+        Music.Instance.SwitchSound(line);
     }
 
     public void OnClickExit()
@@ -41,8 +46,8 @@ public class MainMenuController : MonoBehaviour {
     {
         Time.timeScale = 0.0f;
         SceneManager.LoadScene("Main");
-        Container.Reset();
-        CurrentTowerDefenceState.Reset();
+        Container.Instance = null;
+        CurrentTowerDefenceState.Instance = null;
         Time.timeScale = 1.0f;
     }
 }

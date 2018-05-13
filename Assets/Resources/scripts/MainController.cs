@@ -42,9 +42,18 @@ public class MainController : MonoBehaviour {
 
     private void Awake()
     {
-        Container.GetInstance().AddTowers(towers0);
-        Container.GetInstance().AddTowers(towers1);
-        var missingCollidersObject = GameObject.FindGameObjectWithTag("MissingColliders");
+        Container.Instance = new Container();
+        Container.Instance.AddTowers(towers0, 0);
+        Container.Instance.AddTowers(towers1, 1);
+        Container.Instance.ProjectileContainer = Container.GetContainer(Config.PROJECTILE_CONTAINER_TAG_NAME);
+        Container.Instance.RouteContainer = Container.GetContainer(Config.ROUTE_CONTAINER_TAG_NAME);
+        Container.Instance.TowerContainer = Container.GetContainer(Config.TOWER_CONTAINER_TAG_NAME);
+        Container.Instance.UnitContainer = Container.GetContainer(Config.UNIT_CONTAINER_TAG_NAME);
+        Container.Instance.CreateTowerCanvas = Container.GetContainer(Config.CREATE_TOWER_CANVAS_TAG_NAME).GetComponent<Canvas>();
+
+        CurrentTowerDefenceState.Instance = new CurrentTowerDefenceState();
+
+        var missingCollidersObject = GameObject.FindGameObjectWithTag(Config.MISSING_COLIDERS_CONTAINER_TAG_NAME);
         if (missingCollidersObject != null)
             missingCollidersObject.SetActive(false);
     }
@@ -54,7 +63,7 @@ public class MainController : MonoBehaviour {
         lastIncreaseMoneyTime = startedAt = Time.time;
         Time.timeScale = 1.0f;
 
-        var routeContainer = Container.GetInstance().GetRouteContainer();
+        var routeContainer = Container.Instance.RouteContainer;
         var collider = mainTower.GetComponentInChildren<Collider>();
         Debug.Assert(collider != null);
         for (var i = 0; i < routeContainer.transform.childCount; ++i) {
@@ -66,7 +75,7 @@ public class MainController : MonoBehaviour {
                 router.points.Add(routerObject.transform.GetChild(j).transform.position);
             router.points.Add(mainTower.transform.position);
             router.targetCollider = collider;
-            routerController.SetRouter(router);
+            routerController.Router = router;
             routerControllers.Add(routerController);
         }
         for (int i = 0; i < routeContainer.transform.childCount; ++i)
@@ -76,14 +85,13 @@ public class MainController : MonoBehaviour {
 
     private void Update()
     {
-        Music.Update();
         TryToSendUnit();
         var balanceDelta = 0;
         while (Time.time - lastIncreaseMoneyTime > Config.ADD_MONEY_INTERVAL) {
             ++balanceDelta;
             lastIncreaseMoneyTime += Config.ADD_MONEY_INTERVAL;
         }
-        CurrentTowerDefenceState.GetInstance().ChangeBalance(balanceDelta);
+        CurrentTowerDefenceState.Instance.ChangeBalance(balanceDelta);
     }
 
     public void TryToSendUnit()
@@ -101,9 +109,9 @@ public class MainController : MonoBehaviour {
     private void SendUnit(int respawnIndex)
     {
         var routerController = routerControllers[respawnIndex];
-        var router = routerController.GetRouter().CopyInstance();
+        var router = routerController.Router.CopyInstance();
         var units = routerController.units;
-        var unit = Instantiate(units[Random.Range(0, units.Length)], Container.GetInstance().GetUnitContainer().transform);
+        var unit = Instantiate(units[Random.Range(0, units.Length)], Container.Instance.UnitContainer.transform);
         unit.GetComponent<UnitController>().SetUp(router, mainTower);
         router.SetPosition(unit.transform, router.GetInitialPoint());
         routerController.EnableUnit(unit);
@@ -111,14 +119,14 @@ public class MainController : MonoBehaviour {
 
     public void CreateOrUpdateTower()
     {
-        var state = CurrentTowerDefenceState.GetInstance();
+        var state = CurrentTowerDefenceState.Instance;
         Debug.Assert(state.GetBalance() >= Config.CONSTRUCT_TOWER_COST);
-        var controller = state.GetCurrentTower().GetComponent<TowerPositionController>();
+        var controller = state.GetSelectedTower().GetComponent<TowerPositionController>();
         state.CreateNextTower(controller);
     }
 
     public void DeselectTower()
     {
-        CurrentTowerDefenceState.GetInstance().ResetTower();
+        CurrentTowerDefenceState.Instance.ResetTower();
     }
 }

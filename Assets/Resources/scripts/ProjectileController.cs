@@ -19,8 +19,8 @@ public class ProjectileController : MonoBehaviour {
     private void Awake()
     {
         var audioSource = gameObject.GetComponent<AudioSource>();
-        if (audioSource != null) // Settings for specific sound
-            audioSource.time = 5.6f;
+        if (audioSource != null)
+            audioSource.time = Config.AUDIO_SOURCE_PROJECTILE_SOUND_TIME;
     }
 
     private void Start()
@@ -34,7 +34,7 @@ public class ProjectileController : MonoBehaviour {
 
             speedVector = new Vector3(
                 route.x / route.magnitude * speed,
-                g*t1,
+                g * t1,
                 route.z / route.magnitude * speed
             );
         }
@@ -75,7 +75,7 @@ public class ProjectileController : MonoBehaviour {
             }
 
             if (targetType == TargetType.UNIT) {
-                var unitCollection = Container.GetInstance().GetUnitContainer();
+                var unitCollection = Container.Instance.UnitContainer;
                 for (int i = 0; i < unitCollection.transform.childCount; ++i) {
                     var childObject = unitCollection.transform.GetChild(i).gameObject;
                     if ((childObject.transform.position - destinationPoint).sqrMagnitude < damageRadius * damageRadius)

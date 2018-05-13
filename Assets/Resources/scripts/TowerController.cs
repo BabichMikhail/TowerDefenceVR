@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerController : MonoBehaviour
-{
+public class TowerController : MonoBehaviour {
     public int damage = 1000;
     public int fireInterval = 2000;
     public float radius = 20f;
@@ -24,7 +23,7 @@ public class TowerController : MonoBehaviour
             typesSet[unitTypesForAttack[i]] = true;
         if (lastShotTime + fireInterval < Time.time * 1000) {
             var availableUnits = new List<Transform>();
-            var unitContainer = Container.GetInstance().GetUnitContainer();
+            var unitContainer = Container.Instance.UnitContainer;
             var shootAtCenterPoint = transform.parent.GetComponent<TowerPositionController>().GetShootAtCenterPoint();
             for (int i = 0; i < unitContainer.transform.childCount; ++i) {
                 var child = unitContainer.transform.GetChild(i);
@@ -39,7 +38,7 @@ public class TowerController : MonoBehaviour
 
     private void ShootAt(Transform unit)
     {
-        var projectile = Instantiate(projectilePrefab, Container.GetInstance().GetProjectileContainer().transform);
+        var projectile = Instantiate(projectilePrefab, Container.Instance.ProjectileContainer.transform);
         transform.localPosition += firePoint;
         projectile.transform.position = transform.position;
         transform.localPosition -= firePoint;

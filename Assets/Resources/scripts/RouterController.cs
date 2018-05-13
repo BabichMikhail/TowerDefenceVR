@@ -5,10 +5,7 @@ public class RouterController : MonoBehaviour {
     public GameObject[] units;
     public int type;
 
-    private BaseRouter router;
-
-    public void SetRouter(BaseRouter router) { this.router = router; }
-    public BaseRouter GetRouter() { return router; }
+    public BaseRouter Router { get; set; }
 
     public BaseRouter GetEmptyRouter()
     {

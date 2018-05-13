@@ -16,7 +16,8 @@ public class TowerYRoator : MonoBehaviour {
         initialPosition = transform.position;
     }
 
-    void Update () {
+    private void Update ()
+    {
         transform.Rotate(new Vector3(0, rotateSign *  Time.deltaTime * ratateSpeed, 0));
         transform.Translate(new Vector3(0, verticalSign * Time.deltaTime, 0));
         time += (int)(1000 * Time.deltaTime);

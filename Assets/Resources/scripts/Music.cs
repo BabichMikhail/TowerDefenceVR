@@ -2,16 +2,7 @@
 using UnityEngine.UI;
 
 class Music {
-    private Music() {}
-
-    private static Music instance;
-
-    public static Music GetInstance()
-    {
-        if (instance == null)
-            instance = new Music();
-        return instance;
-    }
+    public static Music Instance { get; set; }
 
     private float volume;
     private float time;
@@ -44,11 +35,10 @@ class Music {
             audio.Play();
     }
 
-    public static void Update(bool force = false)
+    public void Update(bool force = false)
     {
-        instance = GetInstance();
-        if ((playing || force) && (instance.audio == null || instance.audio.isPlaying))
-            instance.PlayGlobalMusic(GameObject.FindGameObjectWithTag("MainCamera"));
+        if ((playing || force) && (audio == null || audio.isPlaying))
+            PlayGlobalMusic(GameObject.FindGameObjectWithTag("MainCamera"));
     }
 
     public bool SwitchSound(RawImage line)

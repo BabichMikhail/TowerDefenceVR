@@ -2,55 +2,23 @@
 using UnityEngine;
 
 public class Container {
-    private static GameObject unitContainer;
-    private static GameObject projectileContainer;
-    private static GameObject routeContainer;
-    private static GameObject towerContainer;
-    private static Canvas createTowerCanvas;
-    private static List<GameObject[]> towers = new List<GameObject[]>();
+    private Dictionary<int, GameObject[]> towersByType = new Dictionary<int, GameObject[]>();
 
-    private static Container instance;
+    public static Container Instance { get; set; }
 
-    private Container() {}
-
-    public static void Reset() { instance = null; }
-
-    public static Container GetInstance()
+    public static GameObject GetContainer(string tagName)
     {
-        if (instance == null)
-            instance = new Container();
-        return instance;
+        var container = GameObject.FindGameObjectWithTag(tagName);
+        Debug.Assert(container != null);
+        return container;
     }
 
-    public void AddTowers(GameObject[] towers) { Container.towers.Add(towers);  }
-    public GameObject[] GetTowers(int type) { return towers[type]; }
-    public GameObject GetUnitContainer()
-    {
-        if (unitContainer == null)
-            unitContainer = GameObject.FindGameObjectWithTag("UnitContainer");
-        return unitContainer;
-    }
-    public GameObject GetProjectileContainer()
-    {
-        if (projectileContainer == null)
-            projectileContainer = GameObject.FindGameObjectWithTag("ProjectileContainer");
-        return projectileContainer;
-    }
-    public GameObject GetRouteContainer()
-    {
-        if (routeContainer == null)
-            routeContainer = GameObject.FindGameObjectWithTag("RouteContainer");
-        return routeContainer;
-    }
-    public GameObject GetTowerContainer() {
-        if (towerContainer == null)
-            towerContainer = GameObject.FindGameObjectWithTag("TowerContainer");
-        return towerContainer;
-    }
-    public Canvas GetCreateTowerCanvas()
-    {
-        if (createTowerCanvas == null)
-            createTowerCanvas = GameObject.FindGameObjectWithTag("CreateTowerCanvas").GetComponent<Canvas>();
-        return createTowerCanvas;
-    }
+    public GameObject UnitContainer { get; set; }
+    public GameObject ProjectileContainer { get; set; }
+    public GameObject RouteContainer { get; set; }
+    public GameObject TowerContainer { get; set; }
+    public Canvas CreateTowerCanvas { get; set; }
+
+    public void AddTowers(GameObject[] towers, int type) { towersByType[type] = towers;  }
+    public GameObject[] GetTowers(int type) { return towersByType[type]; }
 }
