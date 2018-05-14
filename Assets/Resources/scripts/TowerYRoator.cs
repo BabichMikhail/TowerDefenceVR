@@ -5,7 +5,6 @@ public class TowerYRoator : MonoBehaviour {
 
     private int rotateSign = 1;
     private int verticalSign = 1;
-    private Vector3 initialPosition;
     private int time = 0;
 
     private void Start()
@@ -13,7 +12,6 @@ public class TowerYRoator : MonoBehaviour {
         transform.Rotate(new Vector3(0, Random.Range(0.0f, 360.0f), 0));
         ratateSpeed = Random.Range(1.0f, 10.0f);
         rotateSign = Random.Range(0, 2) == 0 ? 1 : -1;
-        initialPosition = transform.position;
     }
 
     private void Update ()

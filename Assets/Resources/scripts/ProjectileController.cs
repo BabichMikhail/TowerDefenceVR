@@ -51,8 +51,6 @@ public class ProjectileController : MonoBehaviour {
 
         Vector3 movement = new Vector3(0, 0, 0);
 
-        Debug.Assert(initialPoint != null);
-        Debug.Assert(destinationPoint != null);
         if (approximationDegree == 1) {
             movement = (destinationObject.transform.position - transform.position).normalized * Time.deltaTime * speed;
             destinationPoint = destinationObject.transform.position;

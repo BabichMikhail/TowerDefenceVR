@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CurrentTowerDefenceState {
     private GameObject selectedTower;
-    private Dictionary<string, TowerController> createdTowers = new Dictionary<string, TowerController>();
     private int balance = Config.START_BALANCE;
 
     public static CurrentTowerDefenceState Instance { get; set; }

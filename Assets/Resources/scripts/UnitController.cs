@@ -19,7 +19,6 @@ public class UnitController : MonoBehaviour {
     private int lastShotTime = -10000;
     private bool disabled = false;
     private bool hitted = false;
-    private float deathTime;
     private Vector3 deathSpeed = new Vector3(0.0f, 0.0f, 0.0f);
 
     private bool canShootAtTower()
@@ -39,7 +38,6 @@ public class UnitController : MonoBehaviour {
         }
 
         if (health <= 0) {
-            deathTime = Time.time;
             router.Stop(transform);
             Animation.TryAnimate(gameObject, "Death");
             CurrentTowerDefenceState.Instance.ChangeBalance(10);
